@@ -90,6 +90,11 @@ def main():
             source = source.replace("        video_latents = self.denormalize_video_latents(latents)",
                 "        if not enable_vae_tiling:\n            self.video_vae.disable_tiling()\n\n"
                 "        video_latents = self.denormalize_video_latents(latents)")
+        if name == "models/modules/block_sparse_attention/dynamic_block_shape.py":
+            # Registry E702 preflight: split statements without changing the AST.
+            source = source.replace("; off +=", "\n    off +=")
+            for axis in "THW":
+                source = source.replace(f"; a{axis} =", f"\n        a{axis} =")
         target = ROOT / "prism/native" / relative
         target.parent.mkdir(parents=True, exist_ok=True)
         target.write_text("# Vendored from Tencent-Hunyuan/Prism " + COMMIT + ". See NATIVE_CHANGES.md.\n" + source, encoding="utf-8")

@@ -7,6 +7,8 @@ subset from a checkout at `.research/Prism`.
 
 Local changes:
 
+- Split six semicolon-separated statements in `dynamic_block_shape.py` for the
+  Comfy Registry E702 preflight. The Python AST is unchanged.
 - Private relative imports, allowing other ComfyUI plugins to use their own `hymm`.
 - Load BSA kernels when requested, so dense SDPA does not require Triton.
 - Eager video modulation and cross-modal rotary execution; no mandatory Inductor

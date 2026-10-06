@@ -157,9 +157,12 @@ def _unpack_aggregates(packed: torch.Tensor, D: int):
     Nz = packed.shape[0]
     channel_means = packed[:, :D]
     off = D
-    frame_means_T = packed[:, off:off + zs * D].reshape(Nz, zs, D); off += zs * D
-    axis_means_H = packed[:, off:off + zs * D].reshape(Nz, zs, D); off += zs * D
-    axis_means_W = packed[:, off:off + zs * D].reshape(Nz, zs, D); off += zs * D
+    frame_means_T = packed[:, off:off + zs * D].reshape(Nz, zs, D)
+    off += zs * D
+    axis_means_H = packed[:, off:off + zs * D].reshape(Nz, zs, D)
+    off += zs * D
+    axis_means_W = packed[:, off:off + zs * D].reshape(Nz, zs, D)
+    off += zs * D
     return channel_means, frame_means_T, axis_means_H, axis_means_W
 
 
@@ -222,9 +225,12 @@ def compute_audio_directional(
         # Per-axis masked mean over the other two axes, then masked variance over
         # the axis. Padded positions are excluded so they cannot fabricate audio
         # directional structure (mirrors the V-feature masking).
-        cT = m.sum(dim=(2, 3)).clamp(min=1.0); aT = (a * m).sum(dim=(2, 3)) / cT  # [Nz,t]
-        cH = m.sum(dim=(1, 3)).clamp(min=1.0); aH = (a * m).sum(dim=(1, 3)) / cH
-        cW = m.sum(dim=(1, 2)).clamp(min=1.0); aW = (a * m).sum(dim=(1, 2)) / cW
+        cT = m.sum(dim=(2, 3)).clamp(min=1.0)
+        aT = (a * m).sum(dim=(2, 3)) / cT  # [Nz,t]
+        cH = m.sum(dim=(1, 3)).clamp(min=1.0)
+        aH = (a * m).sum(dim=(1, 3)) / cH
+        cW = m.sum(dim=(1, 2)).clamp(min=1.0)
+        aW = (a * m).sum(dim=(1, 2)) / cW
         t_valid = m.sum(dim=(2, 3)) > 0
         h_valid = m.sum(dim=(1, 3)) > 0
         w_valid = m.sum(dim=(1, 2)) > 0
