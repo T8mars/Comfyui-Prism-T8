@@ -90,6 +90,10 @@ def validate_sparse(values):
         elif "chunk_3d_shape" in key:
             if not isinstance(value, (list, tuple)) or len(value) != 3 or any(type(x) is not int or x < 1 for x in value):
                 raise ValueError(f"{key} must contain three positive integers")
+            if any(x & (x - 1) for x in value):
+                raise ValueError(f"{key} axes must be powers of two for native BSA kernels")
+            if key in ("bsa_chunk_3d_shape_k", "bsa_v2a_chunk_3d_shape_k") and math.prod(value) < 16:
+                raise ValueError(f"{key} must contain at least 16 key tokens for native BSA kernels")
         elif value is None:
             if key not in ("bsa_cdf_threshold", "bsa_v2a_cdf_threshold"):
                 raise ValueError(f"{key} cannot be null")
@@ -102,8 +106,9 @@ def validate_sparse(values):
     for key in ("bsa_cdf_threshold", "bsa_v2a_cdf_threshold", "taylor_alpha_f"):
         if options[key] is not None and not 0 <= options[key] <= 1:
             raise ValueError(f"{key} must be in [0,1]")
-    if type(options["bsa_v2a_audio_chunk_size"]) is not int or options["bsa_v2a_audio_chunk_size"] < 64 or options["bsa_v2a_audio_chunk_size"] % 64:
-        raise ValueError("bsa_v2a_audio_chunk_size must be a positive multiple of 64")
+    audio_chunk = options["bsa_v2a_audio_chunk_size"]
+    if type(audio_chunk) is not int or audio_chunk < 64 or audio_chunk & (audio_chunk - 1):
+        raise ValueError("bsa_v2a_audio_chunk_size must be a power of two of at least 64")
     if options["enable_taylor_sparse_attn"] and options["enable_rectified_sparse_attn"]:
         raise ValueError("Taylor and rectified sparse attention are mutually exclusive")
     if options["enable_ivpq_dynamic_block"] and options["enable_penalty_dynamic_block"]:

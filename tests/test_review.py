@@ -51,6 +51,22 @@ def test_reference_crop_is_centered_and_rgb():
     assert result.getpixel((8, 8)) == (0, 255, 0)
 
 
+@pytest.mark.parametrize("height,width", [(8192, 16), (16, 8192)])
+def test_reference_extreme_aspect_ratio_preserves_color(height, width):
+    from PIL import Image
+    validate_generation({"height": height, "width": width})
+    result = crop_reference(Image.new("RGB", (32, 32), (230, 50, 70)), height, width)
+    assert result.size == (width, height)
+    assert result.getextrema() == ((230, 230), (50, 50), (70, 70))
+
+
+def test_reference_tensor_with_grad_can_be_used_for_inference():
+    image = torch.full((1, 32, 32, 3), .5, requires_grad=True)
+    result = crop_reference(image, 16, 16)
+    assert result.getextrema() == ((127, 127),) * 3
+    assert image.requires_grad and image.grad is None
+
+
 def test_quantization_json_requires_object():
     tensor = torch.tensor(list(b"[]"), dtype=torch.uint8)
     with pytest.raises(ValueError):

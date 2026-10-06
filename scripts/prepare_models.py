@@ -12,10 +12,14 @@ def main():
     parser.add_argument("--source", default="checkpoints/official")
     parser.add_argument("--output", default="models/standalone")
     parser.add_argument("--variant", choices=("alpha", "beta"), default="alpha")
+    parser.add_argument("--precision", choices=("int8_convrot", "bf16"), default="int8_convrot")
+    parser.add_argument("--mseclip", action="store_true")
     parser.add_argument("--wait-for-preview", action="store_true", help="A download is already running; wait for its atomically completed preview")
     parser.add_argument("--skip-smoke", action="store_true")
     args = parser.parse_args()
     root = Path(__file__).resolve().parents[1]
+    sys.path.insert(0, str(root))
+    from scripts.validate_file_headers import validate_headers
     source = (root / args.source).resolve()
     output = (root / args.output).resolve()
     status_path = root / "outputs" / f"{args.variant}_build_status.json"
@@ -29,6 +33,13 @@ def main():
     def execute(script, *options):
         subprocess.run([sys.executable, str(root / "scripts" / script), *map(str, options)], cwd=root, check=True)
     try:
+        manifest_path = output / f"prism_{args.variant}_conversion.json"
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8")) if manifest_path.exists() else {"components": {}}
+        if manifest_path.exists():
+            if manifest.get("precision") != args.precision or manifest.get("mseclip") != args.mseclip:
+                raise ValueError("Existing manifest uses a different recipe; choose matching --precision/--mseclip or a new output directory")
+            status("validating_existing")
+            validate_headers(output, args.variant, require_complete=False)
         status("downloading")
         preview = source / f"preview_{args.variant}/diffusion_pytorch_model.safetensors"
         if args.wait_for_preview:
@@ -36,14 +47,15 @@ def main():
                 time.sleep(5)
         else:
             execute("download_models.py", "--output", source, "--variant", args.variant)
-        manifest_path = output / f"prism_{args.variant}_conversion.json"
-        manifest = json.loads(manifest_path.read_text(encoding="utf-8")) if manifest_path.exists() else {"components": {}}
         all_components = ("video_dit", "video_dit_2", "audio_dit", "dual_tower_bridge", "text_encoder", "video_vae", "audio_vae")
         missing = [kind for kind in all_components if kind not in manifest["components"] or not (output / manifest["components"][kind]["file"]).exists()]
         if missing:
             status("converting", components=missing)
             execute("convert_models.py", "--base", source / "pretrained_models/MOVA-360p", "--preview", preview,
-                    "--output", output, "--variant", args.variant, "--device", "cuda:0", "--components", *missing)
+                    "--output", output, "--variant", args.variant, "--precision", args.precision,
+                    *(["--mseclip"] if args.mseclip else []), "--resume", "--device", "cuda:0", "--components", *missing)
+        status("validating_complete")
+        validate_headers(output, args.variant)
         reused = False
         if not args.skip_smoke:
             validation_folder = root / "outputs" / f"{args.variant}_validation"

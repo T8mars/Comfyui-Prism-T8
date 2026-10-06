@@ -7,6 +7,15 @@ subset from a checkout at `.research/Prism`.
 
 Local changes:
 
+- Pure top-k BSA selection retains at least one key block, matching the existing
+  mixed CDF/top-k guard. Previously a small grid could select zero blocks and
+  silently return all-zero attention. The change is reproduced by the vendor
+  script and covered by real CUDA comparisons on a single block.
+- BSA gating scores explicitly promote pooled Q/K to a common dtype. Masked
+  pooling returns FP32 while an unpadded peer can remain BF16; some small
+  configurations previously failed on their mixed-dtype matmul. Matching-dtype
+  paths retain their original dtype. Micro CUDA tests cover the boundary;
+  this is not evidence of a new full-model sparse sample's quality.
 - Split six semicolon-separated statements in `dynamic_block_shape.py` for the
   Comfy Registry E702 preflight. The Python AST is unchanged.
 - Private relative imports, allowing other ComfyUI plugins to use their own `hymm`.
@@ -34,8 +43,9 @@ Local changes:
   before conversion to integer PIL images, which could otherwise hide NaNs.
 
 The paired scheduler, normalization constants, expert boundary, CFG equations,
-bridge interaction, reference conditioning, and sparse kernels remain upstream
-implementations. We never use destructive `remove_video_dit=True`.
+bridge interaction, reference conditioning, and attention CUDA kernels remain
+upstream implementations, with the top-k selection guard documented above.
+We never use destructive `remove_video_dit=True`.
 
 INT8 ConvRot uses Comfy-Org's wire schema and regular Hadamard convention, checked
 against `comfy_kitchen.tensor.int8_utils`. The integration implementation is in

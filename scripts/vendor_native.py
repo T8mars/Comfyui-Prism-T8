@@ -90,6 +90,15 @@ def main():
             source = source.replace("        video_latents = self.denormalize_video_latents(latents)",
                 "        if not enable_vae_tiling:\n            self.video_vae.disable_tiling()\n\n"
                 "        video_latents = self.denormalize_video_latents(latents)")
+        if name == "models/modules/block_sparse_attention/bsa_interface.py":
+            # Pure top-k must retain a block even when the grid has few blocks.
+            source = source.replace("    num_selected = int((1 - sparsity) * score.shape[-1])",
+                                    "    num_selected = max(1, int((1 - sparsity) * score.shape[-1]))", 1)
+            # Masked pooling returns FP32; an unpadded peer may still be BF16.
+            source = source.replace("def cal_score(q, k):\n",
+                "def cal_score(q, k):\n"
+                "    score_dtype = torch.promote_types(q.dtype, k.dtype)\n"
+                "    q, k = q.to(score_dtype), k.to(score_dtype)\n", 1)
         if name == "models/modules/block_sparse_attention/dynamic_block_shape.py":
             # Registry E702 preflight: split statements without changing the AST.
             source = source.replace("; off +=", "\n    off +=")

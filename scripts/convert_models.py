@@ -18,6 +18,7 @@ def main():
     parser.add_argument("--cpu-threads", type=int, default=4)
     parser.add_argument("--mseclip", action="store_true", help="Experimental optimal clipping; 80x extra quantization work")
     parser.add_argument("--overwrite", action="store_true")
+    parser.add_argument("--resume", action="store_true", help="Validate and reuse matching outputs, including files installed before a manifest write failure")
     parser.add_argument("--dry-run", action="store_true")
     parser.add_argument("--components", nargs="+", help="Convert selected components, merging their manifest sequentially")
     args = parser.parse_args()
@@ -25,7 +26,7 @@ def main():
     torch.set_num_threads(args.cpu_threads)
     convert_bundle(args.base, args.preview, args.output, variant=args.variant,
                    precision=args.precision, mseclip=args.mseclip, device=args.device,
-                   overwrite=args.overwrite, dry_run=args.dry_run, components=args.components)
+                   overwrite=args.overwrite, dry_run=args.dry_run, components=args.components, resume=args.resume)
 
 
 if __name__ == "__main__":

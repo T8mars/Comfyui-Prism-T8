@@ -11,8 +11,8 @@ import torch
 from safetensors import safe_open
 
 from . import FORMAT_VERSION, UPSTREAM_COMMIT
-from .format import COMPONENTS, Component, StreamingWriter, TensorReader, tokenizer_metadata
-from .quantization import best_group_size, quantize
+from .format import COMPONENTS, DTYPES, Component, StreamingWriter, TensorReader, tokenizer_metadata
+from .quantization import best_group_size, decode_config, quantize
 
 
 def split_fused_key(key, fused_layers):
@@ -100,8 +100,52 @@ def validate_plan(kind, config, plan):
         raise ValueError(f"Incomplete source {kind}: {sorted(missing)[:8]}")
 
 
+def validate_converted_component(path, kind, config, metadata, plan, quantized):
+    """Check an existing output's recipe and layout before explicit recovery.
+
+    This checks native shapes, storage dtypes and quantization records. It does
+    not establish equivalence to a source whose weight values have been changed.
+    """
+    component = Component.inspect(path, kind)
+    for key, value in metadata.items():
+        actual = component.metadata.get(key)
+        if key in ("prism.config", "prism.scheduler_config", "prism.tokenizer_files"):
+            matches = actual is not None and json.loads(actual) == json.loads(value)
+        else:
+            matches = actual == value
+        if not matches:
+            raise ValueError(f"Cannot resume {Path(path).name}: metadata differs for {key}")
+    from .loading import make_module
+    with torch.device("meta"):
+        expected = make_module(Component(Path(path), kind, config, metadata)).state_dict()
+    quantized = set(quantized)
+    keys = set(plan)
+    for key in quantized:
+        prefix = key[:-len(".weight")]
+        keys.update((prefix + ".weight_scale", prefix + ".comfy_quant"))
+    with TensorReader(path) as reader:
+        header = reader._header
+        if set(header) != keys:
+            raise ValueError(f"Cannot resume {Path(path).name}: tensor keys differ")
+        for key, (_, _, shape) in plan.items():
+            dtype = "I8" if key in quantized else "BF16" if expected[key].is_floating_point() else DTYPES[expected[key].dtype]
+            if header[key]["shape"] != list(shape) or header[key]["dtype"] != dtype:
+                raise ValueError(f"Cannot resume {Path(path).name}: tensor layout differs for {key}")
+        for key in quantized:
+            prefix = key[:-len(".weight")]
+            marker = prefix + ".comfy_quant"
+            quant_config = decode_config(reader.get_tensor(marker))
+            if quant_config["convrot_groupsize"] != best_group_size(plan[key][2][1]):
+                raise ValueError(f"Cannot resume {Path(path).name}: ConvRot group differs for {key}")
+            scale = reader.get_tensor(prefix + ".weight_scale")
+            if (scale.dtype != torch.float32 or list(scale.shape) != [plan[key][2][0], 1]
+                    or not torch.isfinite(scale).all() or not (scale > 0).all()):
+                raise ValueError(f"Cannot resume {Path(path).name}: invalid ConvRot scale for {key}")
+    return component
+
+
 def convert_bundle(base, preview, output, *, variant="alpha", precision="int8_convrot",
-                   mseclip=False, device="cpu", overwrite=False, dry_run=False, components=None):
+                   mseclip=False, device="cpu", overwrite=False, dry_run=False, components=None, resume=False):
     base, output = Path(base), Path(output)
     if variant not in ("alpha", "beta") or precision not in ("int8_convrot", "bf16"):
         raise ValueError("Invalid variant or precision")
@@ -147,7 +191,8 @@ def convert_bundle(base, preview, output, *, variant="alpha", precision="int8_co
         report["components"].update(previous["components"])
     def save_report():
         output.mkdir(parents=True, exist_ok=True)
-        report["complete"] = set(COMPONENTS).issubset(report["components"])
+        report["complete"] = set(COMPONENTS).issubset(report["components"]) and all(
+            (output / entry["file"]).is_file() for entry in report["components"].values())
         temporary = report_path.with_suffix(".json.part")
         temporary.write_text(json.dumps(report, indent=2), encoding="utf-8")
         temporary.replace(report_path)
@@ -175,6 +220,11 @@ def convert_bundle(base, preview, output, *, variant="alpha", precision="int8_co
             metadata["prism.scheduler_config"] = json.dumps(scheduler)
             metadata["prism.boundary_ratio"] = str(model_index.get("boundary_ratio", 0.9))
         quantized_set = set(quantized)
+        if resume and not overwrite and (output / filename).exists():
+            validate_converted_component(output / filename, kind, configs[kind], metadata, plan, quantized)
+            save_report()
+            print(f"  {kind}: reused validated component and recovered its manifest entry", flush=True)
+            continue
         with StreamingWriter(output / filename, metadata, overwrite=overwrite) as writer, ExitStack() as reader_stack:
             # Read one owned tensor, avoiding a 60+GiB private PyTorch mmap on Windows.
             readers = {}

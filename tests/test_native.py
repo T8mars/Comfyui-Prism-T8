@@ -104,6 +104,97 @@ def test_conversion_resumes_after_later_component_failure(tiny_bundle, tmp_path,
     assert first.stat().st_mtime_ns == first_mtime
 
 
+def test_conversion_resume_recovers_file_installed_before_manifest_failure(tiny_bundle, tmp_path, monkeypatch):
+    root = next(iter(tiny_bundle.values())).path.parent.parent
+    write_text = Path.write_text
+    def fail_manifest(path, *args, **kwargs):
+        if path.name == "prism_alpha_conversion.json.part":
+            raise OSError("injected manifest write failure")
+        return write_text(path, *args, **kwargs)
+    monkeypatch.setattr(Path, "write_text", fail_manifest)
+    with pytest.raises(OSError, match="manifest write failure"):
+        convert_bundle(root / "base", None, tmp_path, components=["video_vae"])
+    output = tmp_path / "prism_alpha_video_vae_bf16.safetensors"
+    assert output.is_file() and not (tmp_path / "prism_alpha_conversion.json").exists()
+    before = output.read_bytes(), output.stat().st_mtime_ns
+    monkeypatch.setattr(Path, "write_text", write_text)
+    report = convert_bundle(root / "base", None, tmp_path, components=["video_vae"], resume=True)
+    assert set(report["components"]) == {"video_vae"}
+    assert (output.read_bytes(), output.stat().st_mtime_ns) == before
+    native = load_component(Component.inspect(output))
+    assert all(torch.isfinite(p).all() for p in native.parameters())
+
+
+@pytest.mark.parametrize("failure", ["recipe", "tensor_keys"])
+def test_resume_rejects_incompatible_orphan_without_overwriting(tiny_bundle, tmp_path, failure):
+    root = next(iter(tiny_bundle.values())).path.parent.parent
+    convert_bundle(root / "base", None, tmp_path, components=["video_vae"])
+    manifest = tmp_path / "prism_alpha_conversion.json"
+    manifest.unlink()
+    output = tmp_path / "prism_alpha_video_vae_bf16.safetensors"
+    if failure == "tensor_keys":
+        metadata = Component.inspect(output).metadata
+        save_file({"unexpected": torch.ones(1)}, output, metadata=metadata)
+    before = output.read_bytes(), output.stat().st_mtime_ns
+    with pytest.raises(ValueError, match="Cannot resume"):
+        convert_bundle(root / "base", None, tmp_path, components=["video_vae"], resume=True,
+                       mseclip=failure == "recipe")
+    assert (output.read_bytes(), output.stat().st_mtime_ns) == before
+    assert not manifest.exists()
+
+
+@pytest.mark.parametrize("case", ["valid", "corrupt", "recipe_mismatch"])
+def test_prepare_models_checks_existing_bundle_before_completing(tiny_bundle, tmp_path, monkeypatch, case):
+    import shutil
+    import sys
+    import scripts.prepare_models as prepare
+    output = tmp_path / "models/standalone"
+    shutil.copytree(next(iter(tiny_bundle.values())).path.parent, output)
+    if case == "corrupt":
+        (output / tiny_bundle["video_dit"].path.name).write_bytes(b"x")
+    elif case == "recipe_mismatch":
+        manifest = output / "prism_alpha_conversion.json"
+        data = json.loads(manifest.read_text())
+        data["precision"] = "bf16"
+        manifest.write_text(json.dumps(data), encoding="utf-8")
+    preview = tmp_path / "checkpoints/official/preview_alpha/diffusion_pytorch_model.safetensors"
+    preview.parent.mkdir(parents=True)
+    preview.touch()
+    monkeypatch.setattr(prepare, "__file__", str(tmp_path / "scripts/prepare_models.py"))
+    monkeypatch.setattr(sys, "argv", ["prepare_models.py", "--wait-for-preview", "--skip-smoke"])
+    monkeypatch.setattr(prepare.subprocess, "run", lambda *a, **k: pytest.fail("Preparation unexpectedly ran a subprocess"))
+    if case == "valid":
+        prepare.main()
+    else:
+        with pytest.raises(Exception, match="header|different recipe"):
+            prepare.main()
+    status = json.loads((tmp_path / "outputs/alpha_build_status.json").read_text())
+    assert status["phase"] == ("complete" if case == "valid" else "failed")
+    if case == "valid":
+        assert status["smoke_test"] is False and status["quality_acceptance"] is False
+
+
+@pytest.mark.parametrize("case", ["orphan_scale", "integer_weight"])
+def test_header_validation_rejects_records_that_native_loading_would_reject(tiny_bundle, tmp_path, case):
+    import shutil
+    from prism.format import TensorReader
+    from scripts.validate_file_headers import validate_headers
+    output = tmp_path / "out"
+    shutil.copytree(next(iter(tiny_bundle.values())).path.parent, output)
+    path = output / tiny_bundle["video_vae"].path.name
+    metadata = Component.inspect(path).metadata
+    with TensorReader(path, copy=True) as reader:
+        tensors = {key: reader.get_tensor(key).clone() for key in reader.keys()}
+    if case == "orphan_scale":
+        tensors["orphan.weight_scale"] = torch.ones(1)
+    else:
+        key = next(key for key in tensors if key.endswith(".weight"))
+        tensors[key] = tensors[key].to(torch.int8)
+    save_file(tensors, path, metadata=metadata)
+    with pytest.raises(ValueError, match="Unpaired|storage dtype"):
+        validate_headers(output)
+
+
 @pytest.mark.skipif(not torch.cuda.is_available(), reason="Native inference requires CUDA")
 def test_rejects_nonfinite_vae_output_before_pil_conversion(tiny_bundle, monkeypatch):
     from diffusers import AutoencoderKLWan

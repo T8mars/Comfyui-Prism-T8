@@ -203,6 +203,8 @@ def masked_mean_pooling_compression(
 
 @torch.compile
 def cal_score(q, k):
+    score_dtype = torch.promote_types(q.dtype, k.dtype)
+    q, k = q.to(score_dtype), k.to(score_dtype)
     k_transposed = k.transpose(-1, -2)  # [b, h, d, s_k]
     score = torch.matmul(q, k_transposed)  # [b, h, s_q, s_k]
     return score
@@ -235,7 +237,7 @@ def get_select_indices_topk(q, k, sparsity):
 
 @torch.compile
 def get_select_indices_topk_from_score(score, sparsity):
-    num_selected = int((1 - sparsity) * score.shape[-1])
+    num_selected = max(1, int((1 - sparsity) * score.shape[-1]))
     block_indices = torch.topk(score, num_selected)[1]
     block_indices, _ = torch.sort(block_indices, dim=-1)
 

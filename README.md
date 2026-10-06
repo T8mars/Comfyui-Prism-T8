@@ -54,7 +54,7 @@ ConvRot 量化用于 block Linear；embedding、norm、时间投影、输出头�
 
 每份都是包含节点位置、分组、参数与连线的**画布格式**，输出 PNG 帧、48 kHz FLAC、H.264/AAC MP4 及画布视频预览。MP4 保留全部视频帧，较短音轨补静音、较长音轨裁到视频结尾。详细导入说明见 [examples/README.md](examples/README.md)。
 
-支持独立视频／音频提示词、`<music>` / `<sfx>` / `<speech>` 标签、CFG、seed、视觉／音频 shift、分块或整组件 CPU 卸载，以及原生稀疏注意力参数。高级参数见 [sparse_options.json](examples/sparse_options.json)。分辨率为 16 的倍数；帧数至少 5，满足 `(frames-1)%4==0`。
+支持独立视频／音频提示词、`<music>` / `<sfx>` / `<speech>` 标签、CFG、seed、视觉／音频 shift、分块或整组件 CPU 卸载，以及原生稀疏注意力参数。高级参数见 [sparse_options.json](examples/sparse_options.json)。分辨率为 16 的倍数；帧数至少 5，满足 `(frames-1)%4==0`。BSA 的三维块各轴为 2 的幂，K 块至少 16 tokens；v2a 音频块为不小于 64 的 2 的幂。
 
 ## 运行与验证
 
@@ -71,7 +71,7 @@ python scripts/download_models.py --output checkpoints/official --variant alpha
 python scripts/convert_models.py --base checkpoints/official/pretrained_models/MOVA-360p --preview checkpoints/official/preview_alpha/diffusion_pytorch_model.safetensors --output models/standalone --variant alpha --device cuda:0
 ```
 
-转换输出也会被插件自动发现。源权重约 72.35 GiB，转换需额外预留最终模型及一个最大组件的临时空间。支持 `--variant beta`、`--dry-run` 与 `--components`；中断后可用 `scripts/prepare_models.py` 接续未完成组件。量化配方与文件校验见 Hugging Face 模型仓库。
+转换输出也会被插件自动发现。源权重约 72.35 GiB，转换需额外预留最终模型及一个最大组件的临时空间。支持 `--variant beta`、`--dry-run` 与 `--components`。保持源权重不变时，可加 `--resume` 校验并复用已完成文件；`scripts/prepare_models.py` 会验证现有组件、恢复缺失清单并接续转换。默认不覆盖文件，切换配方请选新输出目录。量化配方与文件校验见 Hugging Face 模型仓库。
 
 ## 来源与许可
 
