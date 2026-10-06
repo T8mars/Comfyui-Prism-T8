@@ -39,7 +39,7 @@ def save_video(frames, audio, fps, path, interrupt=None):
         temporary = folder / "video.mp4"
         command = [executable, "-hide_banner", "-loglevel", "error", "-f", "rawvideo", "-pix_fmt", "rgb24",
                    "-s", f"{width}x{height}", "-r", str(fps), "-i", "pipe:0", "-i", str(folder / "audio.wav"),
-                   "-c:v", "libx264", "-crf", "18", "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "192k",
+                   "-c:v", "libx264", "-crf", "18", "-pix_fmt", "yuv420p", "-af", "apad", "-c:a", "aac", "-b:a", "192k",
                    "-movflags", "+faststart", "-shortest", str(temporary)]
         with open(folder / "ffmpeg.log", "wb") as log:
             process = subprocess.Popen(command, stdin=subprocess.PIPE, stdout=subprocess.DEVNULL, stderr=log)

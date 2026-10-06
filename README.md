@@ -6,7 +6,7 @@
 
 ## 安装
 
-在 ComfyUI 节点管理器搜索 **Prism T8**（发布者 `t8star`），或手动安装：
+已提交 Comfy Registry（`t8star/prism-t8`），版本仍需平台审查。可先手动安装：
 
 ```bash
 cd ComfyUI/custom_nodes
@@ -52,7 +52,7 @@ ConvRot 量化用于 block Linear；embedding、norm、时间投影、输出头�
 | [04 · 720p](examples/04_native_i2va_720p.json) | 1280×720、205 帧、VAE tiling 参数预设 |
 | [05 · Kitchen 对照](examples/05_native_i2va_validation.json) | Kitchen INT8 + dense SDPA |
 
-每份都是包含节点位置、分组、参数与连线的**画布格式**，输出 PNG 帧、48 kHz FLAC、H.264/AAC MP4 及画布视频预览。详细导入说明见 [examples/README.md](examples/README.md)。
+每份都是包含节点位置、分组、参数与连线的**画布格式**，输出 PNG 帧、48 kHz FLAC、H.264/AAC MP4 及画布视频预览。MP4 保留全部视频帧，较短音轨补静音、较长音轨裁到视频结尾。详细导入说明见 [examples/README.md](examples/README.md)。
 
 支持独立视频／音频提示词、`<music>` / `<sfx>` / `<speech>` 标签、CFG、seed、视觉／音频 shift、分块或整组件 CPU 卸载，以及原生稀疏注意力参数。高级参数见 [sparse_options.json](examples/sparse_options.json)。分辨率为 16 的倍数；帧数至少 5，满足 `(frames-1)%4==0`。
 
@@ -62,7 +62,7 @@ ConvRot 量化用于 block Linear；embedding、norm、时间投影、输出头�
 
 真实 alpha INT8 样片已完成 **848×480、49 帧、50 步**生成与全帧画面检查，并完整解码声画轨；音频尚未试听。RTX 5090 Laptop 24 GB、分块卸载配置耗时约 47 分钟，PyTorch 峰值分配显存约 7.76 GiB。存在轻微构图漂移与细纹理偏软，量化不保证无损。
 
-五份画布已实际导入和保存，117 项回归测试通过。02/03/05 的完整 480p 样片、720p 长视频、beta 与多卡尚未完成实样验收；320×192 样片画质不佳，建议先使用 01 的默认设置。
+五份画布已实际导入和保存，回归测试全部通过。02/03/05 的完整 480p 样片、720p 长视频、beta 与多卡尚未完成实样验收；320×192 样片画质不佳，建议先使用 01 的默认设置。
 
 ## 自行转换
 
@@ -71,7 +71,7 @@ python scripts/download_models.py --output checkpoints/official --variant alpha
 python scripts/convert_models.py --base checkpoints/official/pretrained_models/MOVA-360p --preview checkpoints/official/preview_alpha/diffusion_pytorch_model.safetensors --output models/standalone --variant alpha --device cuda:0
 ```
 
-转换输出也会被插件自动发现。源权重约 72.35 GiB，转换需额外预留最终模型及一个最大组件的临时空间。支持 `--variant beta`、`--dry-run`、断点恢复；量化配方与文件校验见 Hugging Face 模型仓库。
+转换输出也会被插件自动发现。源权重约 72.35 GiB，转换需额外预留最终模型及一个最大组件的临时空间。支持 `--variant beta`、`--dry-run` 与 `--components`；中断后可用 `scripts/prepare_models.py` 接续未完成组件。量化配方与文件校验见 Hugging Face 模型仓库。
 
 ## 来源与许可
 

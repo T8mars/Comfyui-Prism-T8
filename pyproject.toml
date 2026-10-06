@@ -1,6 +1,6 @@
 [project]
 name = "prism-t8"
-version = "0.1.1"
+version = "0.1.2"
 description = "Native Prism joint video/audio inference with standalone INT8 ConvRot components"
 requires-python = ">=3.10"
 license = { file = "LICENSE" }
