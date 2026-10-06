@@ -53,7 +53,7 @@ def crop_reference(image, height, width):
         if not image.is_floating_point() or not torch.isfinite(image).all():
             raise ValueError("Reference IMAGE must contain finite floating point pixels")
         import numpy as np
-        image = Image.fromarray((image[0, :, :, :3].detach().clamp(0, 1).cpu().numpy() * 255).astype(np.uint8))
+        image = Image.fromarray((image[0, :, :, :3].detach().float().clamp(0, 1).cpu().numpy() * 255).astype(np.uint8))
     image = image.convert("RGB")
     w, h = image.size
     ratio = width / height

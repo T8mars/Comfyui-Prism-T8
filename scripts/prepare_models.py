@@ -40,16 +40,16 @@ def main():
                 raise ValueError("Existing manifest uses a different recipe; choose matching --precision/--mseclip or a new output directory")
             status("validating_existing")
             validate_headers(output, args.variant, require_complete=False)
-        status("downloading")
-        preview = source / f"preview_{args.variant}/diffusion_pytorch_model.safetensors"
-        if args.wait_for_preview:
-            while not preview.exists():
-                time.sleep(5)
-        else:
-            execute("download_models.py", "--output", source, "--variant", args.variant)
         all_components = ("video_dit", "video_dit_2", "audio_dit", "dual_tower_bridge", "text_encoder", "video_vae", "audio_vae")
         missing = [kind for kind in all_components if kind not in manifest["components"] or not (output / manifest["components"][kind]["file"]).exists()]
         if missing:
+            status("downloading")
+            preview = source / f"preview_{args.variant}/diffusion_pytorch_model.safetensors"
+            if args.wait_for_preview:
+                while not preview.exists():
+                    time.sleep(5)
+            else:
+                execute("download_models.py", "--output", source, "--variant", args.variant)
             status("converting", components=missing)
             execute("convert_models.py", "--base", source / "pretrained_models/MOVA-360p", "--preview", preview,
                     "--output", output, "--variant", args.variant, "--precision", args.precision,

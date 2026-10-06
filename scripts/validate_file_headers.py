@@ -15,7 +15,7 @@ from prism import UPSTREAM_COMMIT
 from prism.conversion import eligible_linear, validate_plan
 from prism.format import COMPONENTS, DTYPES, Component, TensorReader
 from prism.loading import make_module
-from prism.quantization import decode_config
+from prism.quantization import best_group_size, decode_config
 from prism.runtime import check_bundle
 
 
@@ -86,8 +86,8 @@ def validate_headers(folder, variant="alpha", require_complete=True):
                 scale_name = prefix + ".weight_scale"
                 if not weight or weight["dtype"] != "I8" or scale_name not in header:
                     raise ValueError(f"Incomplete INT8 ConvRot record: {kind}:{prefix}")
-                if weight["shape"][1] % config["convrot_groupsize"]:
-                    raise ValueError(f"Invalid ConvRot group size: {kind}:{prefix}")
+                if config["convrot_groupsize"] != best_group_size(weight["shape"][1]):
+                    raise ValueError(f"ConvRot group size disagrees with the conversion recipe: {kind}:{prefix}")
                 scale = reader.get_tensor(scale_name)
                 if (scale.dtype != torch.float32 or scale.shape not in
                     (torch.Size([]), torch.Size([1]), torch.Size([weight["shape"][0], 1])) or

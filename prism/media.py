@@ -30,7 +30,7 @@ def save_video(frames, audio, fps, path, interrupt=None):
     count, height, width, _ = frames.shape
     with tempfile.TemporaryDirectory(prefix=".prism_mux_", dir=path.parent) as folder:
         folder = Path(folder)
-        pcm = (waveform[0].detach().cpu().clamp(-1, 1).transpose(0, 1).numpy() * 32767).astype("int16")
+        pcm = (waveform[0].detach().float().cpu().clamp(-1, 1).transpose(0, 1).numpy() * 32767).astype("int16")
         with wave.open(str(folder / "audio.wav"), "wb") as stream:
             stream.setnchannels(pcm.shape[1])
             stream.setsampwidth(2)
@@ -47,7 +47,7 @@ def save_video(frames, audio, fps, path, interrupt=None):
                 for frame in frames:
                     if interrupt:
                         interrupt()
-                    pixels = (frame.detach().cpu().clamp(0, 1).numpy() * 255).round().astype("uint8")
+                    pixels = (frame.detach().float().cpu().clamp(0, 1).numpy() * 255).round().astype("uint8")
                     process.stdin.write(pixels.tobytes())
                 process.stdin.close()
                 while True:

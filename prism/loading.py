@@ -20,7 +20,8 @@ def make_module(component):
         return DualTowerConditionalBridge.from_config(config)
     if kind == "video_vae":
         from diffusers import AutoencoderKLWan
-        return AutoencoderKLWan.from_config(config)
+        from .vae import adapt_video_vae
+        return adapt_video_vae(AutoencoderKLWan.from_config(config))
     if kind == "audio_vae":
         from .native.models.modules.dac_vae import DAC
         return DAC.from_config(config)

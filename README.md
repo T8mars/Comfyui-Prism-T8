@@ -71,7 +71,7 @@ python scripts/download_models.py --output checkpoints/official --variant alpha
 python scripts/convert_models.py --base checkpoints/official/pretrained_models/MOVA-360p --preview checkpoints/official/preview_alpha/diffusion_pytorch_model.safetensors --output models/standalone --variant alpha --device cuda:0
 ```
 
-转换输出也会被插件自动发现。源权重约 72.35 GiB，转换需额外预留最终模型及一个最大组件的临时空间。支持 `--variant beta`、`--dry-run` 与 `--components`。保持源权重不变时，可加 `--resume` 校验并复用已完成文件；`scripts/prepare_models.py` 会验证现有组件、恢复缺失清单并接续转换。默认不覆盖文件，切换配方请选新输出目录。量化配方与文件校验见 Hugging Face 模型仓库。
+转换输出也会被插件自动发现。源权重约 72.35 GiB，转换需额外预留最终模型及一个最大组件的临时空间。支持 `--variant beta`、`--dry-run` 与 `--components`。保持源权重不变时，可加 `--resume` 校验并复用已完成文件；`scripts/prepare_models.py` 会验证现有组件、恢复缺失清单并接续转换。已有完整七组件时，准备脚本无需源权重或联网。默认不覆盖文件，切换配方请选新输出目录。量化配方与文件校验见 Hugging Face 模型仓库。
 
 ## 来源与许可
 

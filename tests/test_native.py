@@ -195,6 +195,56 @@ def test_header_validation_rejects_records_that_native_loading_would_reject(tiny
         validate_headers(output)
 
 
+@pytest.mark.parametrize("wait", [False, True])
+def test_prepare_complete_standalone_bundle_needs_no_source_or_network(tiny_bundle, tmp_path, monkeypatch, wait):
+    import sys
+    from scripts import prepare_models as prepare
+    output = next(iter(tiny_bundle.values())).path.parent
+    monkeypatch.setattr(prepare, "__file__", str(tmp_path / "scripts/prepare_models.py"))
+    monkeypatch.setattr(sys, "argv", ["prepare_models.py", "--output", str(output), "--skip-smoke"]
+                        + (["--wait-for-preview"] if wait else []))
+    monkeypatch.setattr(prepare.subprocess, "run", lambda *a, **k: pytest.fail("Complete bundle must not download source weights"))
+    monkeypatch.setattr(prepare.time, "sleep", lambda *a: pytest.fail("Complete bundle must not wait for an unused preview"))
+    prepare.main()
+    status = json.loads((tmp_path / "outputs/alpha_build_status.json").read_text())
+    assert status["phase"] == "complete" and status["smoke_test"] is False
+    assert status["quality_acceptance"] is False
+
+
+def test_prepare_missing_component_still_downloads_and_converts(tiny_bundle, tmp_path, monkeypatch):
+    import shutil
+    import sys
+    from scripts import prepare_models as prepare
+    fixture_root = next(iter(tiny_bundle.values())).path.parent.parent
+    output = tmp_path / "models/standalone"
+    shutil.copytree(fixture_root / "out", output)
+    (output / tiny_bundle["video_vae"].path.name).unlink()
+    source = tmp_path / "checkpoints/official"
+    shutil.copytree(fixture_root / "base", source / "pretrained_models/MOVA-360p")
+    preview = source / "preview_alpha/diffusion_pytorch_model.safetensors"
+    preview.parent.mkdir(parents=True)
+    shutil.copyfile(fixture_root / "preview.safetensors", preview)
+    monkeypatch.setattr(prepare, "__file__", str(tmp_path / "scripts/prepare_models.py"))
+    monkeypatch.setattr(sys, "argv", ["prepare_models.py", "--skip-smoke"])
+    calls = []
+    original = prepare.subprocess.run
+    def execute(command, **kwargs):
+        name = Path(command[1]).name
+        calls.append(name)
+        if name == "download_models.py":
+            return prepare.subprocess.CompletedProcess(command, 0)
+        assert name == "convert_models.py"
+        # Execute the real CLI with a miniature official-layout source tree.
+        command = [command[0], str(Path(__file__).resolve().parents[1] / "scripts/convert_models.py"), *command[2:]]
+        return original(command, **kwargs)
+    monkeypatch.setattr(prepare.subprocess, "run", execute)
+    prepare.main()
+    assert calls == ["download_models.py", "convert_models.py"]
+    status = json.loads((tmp_path / "outputs/alpha_build_status.json").read_text())
+    assert status["phase"] == "complete" and status["smoke_test"] is False
+    assert (output / tiny_bundle["video_vae"].path.name).is_file()
+
+
 @pytest.mark.skipif(not torch.cuda.is_available(), reason="Native inference requires CUDA")
 def test_rejects_nonfinite_vae_output_before_pil_conversion(tiny_bundle, monkeypatch):
     from diffusers import AutoencoderKLWan

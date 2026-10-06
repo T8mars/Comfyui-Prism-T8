@@ -76,3 +76,13 @@ two conditioning bridges; the secondary video block uploads through its own
 hook. The idle primary video block remains on CPU. The always-called posthook
 still restores the complete fused block on success or interruption. High-noise
 and ordinary video blocks keep their original transfer behavior.
+
+`prism/vae.py` adapts the installed diffusers Wan attention instances locally.
+For a single spatial token, softmax over its single key is exactly one, so the
+branch uses V directly with the original normalization and output projection.
+This avoids CUDA SDPA rejecting strideM=1 on tiny VAE edge tiles. Larger spatial
+grids retain the original forward. Configs, checkpoint keys and tensors are
+unchanged; no installed package or global attention backend is patched. Actual
+CUDA tests compare both 16 and 384 channels against the original math SDPA and
+ordinary paths, and a miniature INT8 pipeline tests tiled decoding. These tests
+do not establish full-model 720p quality.
