@@ -1,0 +1,18 @@
+# Registry archives contain runtime, user scripts, license and canvas workflows.
+/roadmap.md
+/AGENTS.md
+/.github/
+/tests/
+/scripts/diagnose_*.py
+/scripts/review_samples.py
+/examples/Prism-canvas-workflows.zip
+/examples/sample-480p.mp4
+/.research/
+/.venv/
+/models/
+/checkpoints/
+/outputs/
+/test-results/
+__pycache__/
+*.py[cod]
+*.safetensors

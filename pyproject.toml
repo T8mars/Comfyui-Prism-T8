@@ -1,0 +1,29 @@
+[project]
+name = "prism-t8"
+version = "0.1.0"
+description = "Native Prism joint video/audio inference with standalone INT8 ConvRot components"
+requires-python = ">=3.10"
+license = { file = "LICENSE" }
+dependencies = [
+    "diffusers>=0.33.0,<0.38",
+    "transformers>=4.57.1,<5",
+    "accelerate>=1.10",
+    "safetensors>=0.6.2",
+    "einops>=0.8",
+    "ftfy>=6.3",
+    "descript-audiotools>=0.7.2",
+    "sentencepiece>=0.2",
+]
+
+[project.urls]
+Repository = "https://github.com/T8mars/Comfyui-Prism-T8"
+Issues = "https://github.com/T8mars/Comfyui-Prism-T8/issues"
+"Models" = "https://huggingface.co/t8star/Prism-Comfy"
+
+[tool.comfy]
+PublisherId = "t8star"
+DisplayName = "Prism T8"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q --confcutdir=tests"

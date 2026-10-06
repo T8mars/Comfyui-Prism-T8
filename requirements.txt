@@ -1,0 +1,10 @@
+# Install in the Python environment that runs ComfyUI; keep its CUDA PyTorch.
+diffusers>=0.33.0,<0.38
+transformers>=4.57.1,<5
+accelerate>=1.10
+safetensors>=0.6.2
+einops>=0.8
+ftfy>=6.3
+descript-audiotools>=0.7.2
+sentencepiece>=0.2
+# Optional: triton/FlashAttention for native Prism BSA; see README.

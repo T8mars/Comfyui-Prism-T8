@@ -1,0 +1,7 @@
+{
+  "enable_bsa": true,
+  "enable_bsa_v2a": true,
+  "bsa_sparsity": 0.75,
+  "bsa_v2a_sparsity": 0.75,
+  "sparse_high_noise_only": false
+}

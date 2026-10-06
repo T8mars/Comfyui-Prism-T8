@@ -1,0 +1,768 @@
+{
+  "id": "4f72c600-9ccb-453c-9cd4-f928f3c6a799",
+  "revision": 0,
+  "last_node_id": 14,
+  "last_link_id": 15,
+  "nodes": [
+    {
+      "id": 1,
+      "type": "PrismVideoDiTLoader",
+      "pos": [
+        50,
+        60
+      ],
+      "size": [
+        410,
+        80
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "video_dit",
+          "type": "PRISM_VIDEO_DIT",
+          "links": [
+            1
+          ]
+        }
+      ],
+      "title": "Video Dit",
+      "properties": {
+        "Node name for S&R": "PrismVideoDiTLoader"
+      },
+      "widgets_values": [
+        "prism_alpha_video_dit_int8_convrot.safetensors"
+      ]
+    },
+    {
+      "id": 2,
+      "type": "PrismLowNoiseDiTLoader",
+      "pos": [
+        50,
+        164
+      ],
+      "size": [
+        410,
+        80
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "video_dit_2",
+          "type": "PRISM_VIDEO_DIT_2",
+          "links": [
+            2
+          ]
+        }
+      ],
+      "title": "Video Dit 2",
+      "properties": {
+        "Node name for S&R": "PrismLowNoiseDiTLoader"
+      },
+      "widgets_values": [
+        "prism_alpha_video_dit_2_int8_convrot.safetensors"
+      ]
+    },
+    {
+      "id": 3,
+      "type": "PrismAudioDiTLoader",
+      "pos": [
+        50,
+        268
+      ],
+      "size": [
+        410,
+        80
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "audio_dit",
+          "type": "PRISM_AUDIO_DIT",
+          "links": [
+            3
+          ]
+        }
+      ],
+      "title": "Audio Dit",
+      "properties": {
+        "Node name for S&R": "PrismAudioDiTLoader"
+      },
+      "widgets_values": [
+        "prism_alpha_audio_dit_int8_convrot.safetensors"
+      ]
+    },
+    {
+      "id": 4,
+      "type": "PrismBridgeLoader",
+      "pos": [
+        50,
+        372
+      ],
+      "size": [
+        410,
+        80
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "dual_tower_bridge",
+          "type": "PRISM_DUAL_TOWER_BRIDGE",
+          "links": [
+            4
+          ]
+        }
+      ],
+      "title": "Dual Tower Bridge",
+      "properties": {
+        "Node name for S&R": "PrismBridgeLoader"
+      },
+      "widgets_values": [
+        "prism_alpha_dual_tower_bridge_int8_convrot.safetensors"
+      ]
+    },
+    {
+      "id": 5,
+      "type": "PrismTextEncoderLoader",
+      "pos": [
+        50,
+        476
+      ],
+      "size": [
+        410,
+        80
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "text_encoder",
+          "type": "PRISM_TEXT_ENCODER",
+          "links": [
+            5
+          ]
+        }
+      ],
+      "title": "Text Encoder",
+      "properties": {
+        "Node name for S&R": "PrismTextEncoderLoader"
+      },
+      "widgets_values": [
+        "prism_alpha_text_encoder_int8_convrot.safetensors"
+      ]
+    },
+    {
+      "id": 6,
+      "type": "PrismVideoVAELoader",
+      "pos": [
+        50,
+        580
+      ],
+      "size": [
+        410,
+        80
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "video_vae",
+          "type": "PRISM_VIDEO_VAE",
+          "links": [
+            6
+          ]
+        }
+      ],
+      "title": "Video Vae",
+      "properties": {
+        "Node name for S&R": "PrismVideoVAELoader"
+      },
+      "widgets_values": [
+        "prism_alpha_video_vae_bf16.safetensors"
+      ]
+    },
+    {
+      "id": 7,
+      "type": "PrismAudioVAELoader",
+      "pos": [
+        50,
+        684
+      ],
+      "size": [
+        410,
+        80
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "audio_vae",
+          "type": "PRISM_AUDIO_VAE",
+          "links": [
+            7
+          ]
+        }
+      ],
+      "title": "Audio Vae",
+      "properties": {
+        "Node name for S&R": "PrismAudioVAELoader"
+      },
+      "widgets_values": [
+        "prism_alpha_audio_vae_bf16.safetensors"
+      ]
+    },
+    {
+      "id": 8,
+      "type": "PrismNativePipeline",
+      "pos": [
+        1010,
+        60
+      ],
+      "size": [
+        460,
+        195
+      ],
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "video_dit",
+          "type": "PRISM_VIDEO_DIT",
+          "link": 1
+        },
+        {
+          "name": "video_dit_2",
+          "type": "PRISM_VIDEO_DIT_2",
+          "link": 2
+        },
+        {
+          "name": "audio_dit",
+          "type": "PRISM_AUDIO_DIT",
+          "link": 3
+        },
+        {
+          "name": "dual_tower_bridge",
+          "type": "PRISM_DUAL_TOWER_BRIDGE",
+          "link": 4
+        },
+        {
+          "name": "text_encoder",
+          "type": "PRISM_TEXT_ENCODER",
+          "link": 5
+        },
+        {
+          "name": "video_vae",
+          "type": "PRISM_VIDEO_VAE",
+          "link": 6
+        },
+        {
+          "name": "audio_vae",
+          "type": "PRISM_AUDIO_VAE",
+          "link": 7
+        }
+      ],
+      "outputs": [
+        {
+          "name": "PRISM_PIPELINE",
+          "type": "PRISM_PIPELINE",
+          "links": [
+            8
+          ]
+        }
+      ],
+      "title": "Official Native Pipeline",
+      "properties": {
+        "Node name for S&R": "PrismNativePipeline"
+      }
+    },
+    {
+      "id": 9,
+      "type": "LoadImage",
+      "pos": [
+        540,
+        60
+      ],
+      "size": [
+        400,
+        360
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            9
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "title": "Reference Image (official case 5)",
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "prism_official_case5.png",
+        "image"
+      ]
+    },
+    {
+      "id": 10,
+      "type": "PrismSparseOptions",
+      "pos": [
+        540,
+        460
+      ],
+      "size": [
+        400,
+        290
+      ],
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "PRISM_SPARSE_OPTIONS",
+          "type": "PRISM_SPARSE_OPTIONS",
+          "links": [
+            10
+          ]
+        }
+      ],
+      "title": "Native Sparse Attention Options",
+      "properties": {
+        "Node name for S&R": "PrismSparseOptions"
+      },
+      "widgets_values": [
+        true,
+        0.75,
+        "ivpq",
+        false,
+        "{\n  \"enable_bsa_v2a\": true,\n  \"bsa_v2a_sparsity\": 0.75\n}"
+      ]
+    },
+    {
+      "id": 11,
+      "type": "PrismNativeSampler",
+      "pos": [
+        1010,
+        300
+      ],
+      "size": [
+        460,
+        820
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "pipeline",
+          "type": "PRISM_PIPELINE",
+          "link": 8
+        },
+        {
+          "name": "reference_image",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 9
+        },
+        {
+          "name": "sparse_options",
+          "shape": 7,
+          "type": "PRISM_SPARSE_OPTIONS",
+          "link": 10
+        }
+      ],
+      "outputs": [
+        {
+          "name": "frames",
+          "type": "IMAGE",
+          "links": [
+            11,
+            13
+          ]
+        },
+        {
+          "name": "audio",
+          "type": "AUDIO",
+          "links": [
+            12,
+            14
+          ]
+        },
+        {
+          "name": "fps",
+          "type": "FLOAT",
+          "links": [
+            15
+          ]
+        }
+      ],
+      "title": "Native Joint Video + Audio Sampler",
+      "properties": {
+        "Node name for S&R": "PrismNativeSampler"
+      },
+      "widgets_values": [
+        "i2va",
+        "Medium shot on a fishing boat in daylight. A smiling man wearing a gray cap, blue sunglasses and a gray shirt holds a large grouper. The boat gently rocks, the fish moves slightly in his hands, and sunlight glints on the ocean. The camera stays steady. <sfx>Gentle waves and water lapping around the boat.</sfx>",
+        "",
+        "色调艳丽，过曝，静态，细节模糊不清，字幕，风格，作品，画作，画面，静止，整体发灰，最差质量，低质量，JPEG压缩残留，丑陋的，残缺的，多余的手指",
+        848,
+        480,
+        49,
+        24,
+        50,
+        5,
+        42,
+        "fixed",
+        9,
+        7,
+        "block",
+        "sdpa",
+        "kitchen",
+        false,
+        256,
+        192,
+        "strict"
+      ]
+    },
+    {
+      "id": 12,
+      "type": "SaveImage",
+      "pos": [
+        1550,
+        60
+      ],
+      "size": [
+        420,
+        300
+      ],
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 11
+        }
+      ],
+      "outputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "links": null
+        }
+      ],
+      "title": "Save Every Frame (workflow embedded)",
+      "properties": {
+        "Node name for S&R": "SaveImage"
+      },
+      "widgets_values": [
+        "Prism/02_native_i2va_kitchen_bsa/frame"
+      ]
+    },
+    {
+      "id": 13,
+      "type": "SaveAudio",
+      "pos": [
+        1550,
+        410
+      ],
+      "size": [
+        420,
+        200
+      ],
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "audio",
+          "type": "AUDIO",
+          "link": 12
+        }
+      ],
+      "outputs": [
+        {
+          "name": "audio",
+          "type": "AUDIO",
+          "links": null
+        }
+      ],
+      "title": "Save Audio (48 kHz FLAC)",
+      "properties": {
+        "Node name for S&R": "SaveAudio"
+      },
+      "widgets_values": [
+        "Prism/02_native_i2va_kitchen_bsa/audio"
+      ]
+    },
+    {
+      "id": 14,
+      "type": "PrismSaveVideo",
+      "pos": [
+        1550,
+        670
+      ],
+      "size": [
+        420,
+        380
+      ],
+      "flags": {},
+      "order": 13,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "frames",
+          "type": "IMAGE",
+          "link": 13
+        },
+        {
+          "name": "audio",
+          "type": "AUDIO",
+          "link": 14
+        },
+        {
+          "name": "fps",
+          "type": "FLOAT",
+          "widget": {
+            "name": "fps"
+          },
+          "link": 15
+        }
+      ],
+      "outputs": [
+        {
+          "name": "video_path",
+          "type": "STRING",
+          "links": null
+        }
+      ],
+      "title": "Save MP4 + Audio / Canvas Preview",
+      "properties": {
+        "Node name for S&R": "PrismSaveVideo"
+      },
+      "widgets_values": [
+        24,
+        "Prism/02_native_i2va_kitchen_bsa/video"
+      ]
+    }
+  ],
+  "links": [
+    [
+      1,
+      1,
+      0,
+      8,
+      0,
+      "PRISM_VIDEO_DIT"
+    ],
+    [
+      2,
+      2,
+      0,
+      8,
+      1,
+      "PRISM_VIDEO_DIT_2"
+    ],
+    [
+      3,
+      3,
+      0,
+      8,
+      2,
+      "PRISM_AUDIO_DIT"
+    ],
+    [
+      4,
+      4,
+      0,
+      8,
+      3,
+      "PRISM_DUAL_TOWER_BRIDGE"
+    ],
+    [
+      5,
+      5,
+      0,
+      8,
+      4,
+      "PRISM_TEXT_ENCODER"
+    ],
+    [
+      6,
+      6,
+      0,
+      8,
+      5,
+      "PRISM_VIDEO_VAE"
+    ],
+    [
+      7,
+      7,
+      0,
+      8,
+      6,
+      "PRISM_AUDIO_VAE"
+    ],
+    [
+      8,
+      8,
+      0,
+      11,
+      0,
+      "PRISM_PIPELINE"
+    ],
+    [
+      9,
+      9,
+      0,
+      11,
+      1,
+      "IMAGE"
+    ],
+    [
+      10,
+      10,
+      0,
+      11,
+      2,
+      "PRISM_SPARSE_OPTIONS"
+    ],
+    [
+      11,
+      11,
+      0,
+      12,
+      0,
+      "IMAGE"
+    ],
+    [
+      12,
+      11,
+      1,
+      13,
+      0,
+      "AUDIO"
+    ],
+    [
+      13,
+      11,
+      0,
+      14,
+      0,
+      "IMAGE"
+    ],
+    [
+      14,
+      11,
+      1,
+      14,
+      1,
+      "AUDIO"
+    ],
+    [
+      15,
+      11,
+      2,
+      14,
+      2,
+      "FLOAT"
+    ]
+  ],
+  "groups": [
+    {
+      "id": 1,
+      "title": "1. Standalone native components",
+      "bounding": [
+        20,
+        10,
+        470,
+        850
+      ],
+      "color": "#3f789e",
+      "flags": {}
+    },
+    {
+      "id": 2,
+      "title": "2. Reference / sparse options",
+      "bounding": [
+        510,
+        10,
+        460,
+        850
+      ],
+      "color": "#3f789e",
+      "flags": {}
+    },
+    {
+      "id": 3,
+      "title": "3. Joint video / audio sampling",
+      "bounding": [
+        980,
+        10,
+        530,
+        1150
+      ],
+      "color": "#3f789e",
+      "flags": {}
+    },
+    {
+      "id": 4,
+      "title": "4. Frames / audio / MP4",
+      "bounding": [
+        1520,
+        10,
+        490,
+        1150
+      ],
+      "color": "#3f789e",
+      "flags": {}
+    }
+  ],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.46153846153846156,
+      "offset": [
+        371.6666666666665,
+        195
+      ]
+    },
+    "prism": {
+      "name": "02_native_i2va_kitchen_bsa",
+      "format": "ComfyUI canvas",
+      "reference_source": "Tencent-Hunyuan/Prism assets/ti2va_cases/case-5"
+    },
+    "frontendVersion": "1.53.6"
+  },
+  "version": 0.4
+}

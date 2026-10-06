@@ -1,0 +1,16 @@
+/roadmap.md
+/.research/
+/.venv/
+/models/
+/checkpoints/
+/outputs/
+/test-results/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+*.safetensors
+*.part
+*.data.tmp
+*.egg-info/
+build/
+dist/
