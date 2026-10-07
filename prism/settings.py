@@ -9,8 +9,8 @@ OFFICIAL_NEGATIVE_PROMPT = (
 
 GENERATION_DEFAULTS = {"mode": "i2va", "prompt": "", "audio_prompt": "",
     "negative_prompt": OFFICIAL_NEGATIVE_PROMPT,
-    "width": 848, "height": 480, "num_frames": 49, "fps": 24.0, "steps": 50,
-    "cfg": 5.0, "seed": 42, "visual_shift": 9.0, "audio_shift": 7.0,
+    "width": 1280, "height": 720, "num_frames": 205, "fps": 24.0, "steps": 50,
+    "cfg": 5.0, "seed": 42, "visual_shift": 7.0, "audio_shift": 7.0,
     "offload": "block", "attention": "sdpa", "int8_backend": "portable",
     "vae_tiling": False, "tile_size": 256, "tile_stride": 192, "frame_policy": "strict"}
 SPARSE_DEFAULTS = {

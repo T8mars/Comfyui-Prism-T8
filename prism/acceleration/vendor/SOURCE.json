@@ -1,0 +1,717 @@
+{
+  "repository": "FlashML-org/FreeVideo",
+  "commit": "40525196a33bc7ff6a455ce9b18b74f3c827bbb1",
+  "files": [
+    {
+      "source": "LICENSE",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+    },
+    {
+      "source": "THIRD_PARTY_NOTICES.md",
+      "sha256": "41e215c51f70f3a64c05cfda50dfa29b939db3402ee0b8ba1b9744fab44e9501"
+    },
+    {
+      "source": "freevideo_engine/__init__.py",
+      "sha256": "e33cf2ddc9b61cd30010b306dce9cb3fbe2583a142474f42e04733b37f6b4716",
+      "vendored_sha256": "e33cf2ddc9b61cd30010b306dce9cb3fbe2583a142474f42e04733b37f6b4716"
+    },
+    {
+      "source": "freevideo_engine/activation_staging.py",
+      "sha256": "87d57d6398692633303e450d3f0f8e5a16a5e5dea6371492bb02cd7b9f76d038",
+      "vendored_sha256": "87d57d6398692633303e450d3f0f8e5a16a5e5dea6371492bb02cd7b9f76d038"
+    },
+    {
+      "source": "freevideo_engine/adaln.py",
+      "sha256": "050c0cef007fad0d89f098382e6009301e08c063b3e06f4e5f04d0216bbc935c",
+      "vendored_sha256": "050c0cef007fad0d89f098382e6009301e08c063b3e06f4e5f04d0216bbc935c"
+    },
+    {
+      "source": "freevideo_engine/adaln_assets.py",
+      "sha256": "6fcee69e090744d8950a35b9a39c8d48d8f973c0a50a998530a2e00d5c3875de",
+      "vendored_sha256": "6fcee69e090744d8950a35b9a39c8d48d8f973c0a50a998530a2e00d5c3875de"
+    },
+    {
+      "source": "freevideo_engine/adaptive.py",
+      "sha256": "4c5c652d7859d6c665a313bd2ff2fee96edf06e5783c848287a49559567b98e8",
+      "vendored_sha256": "4c5c652d7859d6c665a313bd2ff2fee96edf06e5783c848287a49559567b98e8"
+    },
+    {
+      "source": "freevideo_engine/attention.py",
+      "sha256": "efb898e24309c064562c6f71f11bd9fe4a946d7be33096de507b80d59e2608f6",
+      "vendored_sha256": "efb898e24309c064562c6f71f11bd9fe4a946d7be33096de507b80d59e2608f6"
+    },
+    {
+      "source": "freevideo_engine/backends/__init__.py",
+      "sha256": "f87a47c50e1574422721f11ebb40c2615eb69014f3c2b0524eb1f876081e903e",
+      "vendored_sha256": "f87a47c50e1574422721f11ebb40c2615eb69014f3c2b0524eb1f876081e903e"
+    },
+    {
+      "source": "freevideo_engine/backends/base.py",
+      "sha256": "da4c24332987974f99c8fa69cde4a489cd06d8ad14e686638a31cc137570d4fd",
+      "vendored_sha256": "da4c24332987974f99c8fa69cde4a489cd06d8ad14e686638a31cc137570d4fd"
+    },
+    {
+      "source": "freevideo_engine/backends/cuda.py",
+      "sha256": "45e218c33b66499557585e583e4e82888aefa2c6e9a23a2fc17d9e72a70eeacb",
+      "vendored_sha256": "45e218c33b66499557585e583e4e82888aefa2c6e9a23a2fc17d9e72a70eeacb"
+    },
+    {
+      "source": "freevideo_engine/backends/cuda_attention.py",
+      "sha256": "107e06c0015837915c2d0c08a9f7f2470266cd010b8d07f99da0141d2e6a348c",
+      "vendored_sha256": "107e06c0015837915c2d0c08a9f7f2470266cd010b8d07f99da0141d2e6a348c"
+    },
+    {
+      "source": "freevideo_engine/backends/mps.py",
+      "sha256": "03fe5a7fe66d81d8fd96a455fb448eda86adcc788d2b4e9941307b6b88588c57",
+      "vendored_sha256": "03fe5a7fe66d81d8fd96a455fb448eda86adcc788d2b4e9941307b6b88588c57"
+    },
+    {
+      "source": "freevideo_engine/backends/mps_attention.py",
+      "sha256": "eb6f3570814fac398ced8056f95a05af41883691bb94d3abf204ad729f803e96",
+      "vendored_sha256": "eb6f3570814fac398ced8056f95a05af41883691bb94d3abf204ad729f803e96"
+    },
+    {
+      "source": "freevideo_engine/backends/mps_int8.py",
+      "sha256": "ef06a94d5c36dc68319053e6c1ec4642dab6cc4bcf4e385fa6c2b164cbc4f70f",
+      "vendored_sha256": "ef06a94d5c36dc68319053e6c1ec4642dab6cc4bcf4e385fa6c2b164cbc4f70f"
+    },
+    {
+      "source": "freevideo_engine/backends/mps_linear.py",
+      "sha256": "8def5119073c6819e4cc6bdadcb42caf6c35ab1c8aaa46b4a995a59dd2bafe16",
+      "vendored_sha256": "8def5119073c6819e4cc6bdadcb42caf6c35ab1c8aaa46b4a995a59dd2bafe16"
+    },
+    {
+      "source": "freevideo_engine/backends/mps_weights.py",
+      "sha256": "7d6c1a2f1298a19c72685ef947639cb5e7c8d2dbc142334751d6cd9e49e69d71",
+      "vendored_sha256": "7d6c1a2f1298a19c72685ef947639cb5e7c8d2dbc142334751d6cd9e49e69d71"
+    },
+    {
+      "source": "freevideo_engine/blocks.py",
+      "sha256": "d9bc4bf806b782184d876b5b3d2d817e9c8f2bee43fff61fdc063070e2baf1ed",
+      "vendored_sha256": "d9bc4bf806b782184d876b5b3d2d817e9c8f2bee43fff61fdc063070e2baf1ed"
+    },
+    {
+      "source": "freevideo_engine/bootstrap.py",
+      "sha256": "a58d5df0403cb49d245273abfa2113e4d7a8a6e20c1b5fa918b3f851fe32c52e",
+      "vendored_sha256": "a58d5df0403cb49d245273abfa2113e4d7a8a6e20c1b5fa918b3f851fe32c52e"
+    },
+    {
+      "source": "freevideo_engine/comfy_source.py",
+      "sha256": "ba7527c404e5a0dc9f0e1db8b0a2b7e0831c67791cf81b2cceebb37ffc79c198",
+      "vendored_sha256": "ba7527c404e5a0dc9f0e1db8b0a2b7e0831c67791cf81b2cceebb37ffc79c198"
+    },
+    {
+      "source": "freevideo_engine/compatibility.py",
+      "sha256": "af2efc8bdefb3ead6fb2968164d3f71f56561da807985bf699779a6dc836152f",
+      "vendored_sha256": "af2efc8bdefb3ead6fb2968164d3f71f56561da807985bf699779a6dc836152f"
+    },
+    {
+      "source": "freevideo_engine/compilation_diagnostics.py",
+      "sha256": "3dc456b36ebda9d0ffc9ef18641af78be12538ffea80e7254fdaa54ba72fc2bf",
+      "vendored_sha256": "3dc456b36ebda9d0ffc9ef18641af78be12538ffea80e7254fdaa54ba72fc2bf"
+    },
+    {
+      "source": "freevideo_engine/compute_budget.py",
+      "sha256": "1e2464866c7cdf6b633de5bf555d896bd8ffd391a6dde8e118f733f984caafc7",
+      "vendored_sha256": "1e2464866c7cdf6b633de5bf555d896bd8ffd391a6dde8e118f733f984caafc7"
+    },
+    {
+      "source": "freevideo_engine/conditioning.py",
+      "sha256": "fc1dac8b492f53f5fff2f907401d71a807993cd76e5e040eb62ed4623c1fdd28",
+      "vendored_sha256": "fc1dac8b492f53f5fff2f907401d71a807993cd76e5e040eb62ed4623c1fdd28"
+    },
+    {
+      "source": "freevideo_engine/curl_windows.py",
+      "sha256": "f5411da9c14773e6060d4a5c13638395f8e5c8ff345cb88c77d90f556f8fd3f3",
+      "vendored_sha256": "f5411da9c14773e6060d4a5c13638395f8e5c8ff345cb88c77d90f556f8fd3f3"
+    },
+    {
+      "source": "freevideo_engine/decode_resume.py",
+      "sha256": "a55ec2a6fbe83e643f5eca1d20a0f0e205612fed507a8408697997704135a2af",
+      "vendored_sha256": "a55ec2a6fbe83e643f5eca1d20a0f0e205612fed507a8408697997704135a2af"
+    },
+    {
+      "source": "freevideo_engine/desktop_runtime.py",
+      "sha256": "564316c5130a95f4c15fbcf19a74e0dd44c016360b31d3f9eba6b20c708f065b",
+      "vendored_sha256": "564316c5130a95f4c15fbcf19a74e0dd44c016360b31d3f9eba6b20c708f065b"
+    },
+    {
+      "source": "freevideo_engine/diagnostic_resources.py",
+      "sha256": "6eb9480a48092c8401292ad1981e13f51d45f9106d0301e035bb2a939107a539",
+      "vendored_sha256": "6eb9480a48092c8401292ad1981e13f51d45f9106d0301e035bb2a939107a539"
+    },
+    {
+      "source": "freevideo_engine/diagnostics.py",
+      "sha256": "c0cb4769711d357d125ffab9f79aa4c339e915f6538840699aace3a056390f9a",
+      "vendored_sha256": "c0cb4769711d357d125ffab9f79aa4c339e915f6538840699aace3a056390f9a"
+    },
+    {
+      "source": "freevideo_engine/doctor.py",
+      "sha256": "544a117e224514374485ea8977c0bad92ccf8dc0a094f6a40fd4d649978a5e98",
+      "vendored_sha256": "544a117e224514374485ea8977c0bad92ccf8dc0a094f6a40fd4d649978a5e98"
+    },
+    {
+      "source": "freevideo_engine/download_cache.py",
+      "sha256": "2147a997d6339b7d53b71ef6b7d17614e940195d78bdc092f741244c58efdea0",
+      "vendored_sha256": "2147a997d6339b7d53b71ef6b7d17614e940195d78bdc092f741244c58efdea0"
+    },
+    {
+      "source": "freevideo_engine/download_settings.py",
+      "sha256": "6c7c20efc7f2827c7db751862dd89d0bc47aee4251b0961f449dc848a19d2201",
+      "vendored_sha256": "6c7c20efc7f2827c7db751862dd89d0bc47aee4251b0961f449dc848a19d2201"
+    },
+    {
+      "source": "freevideo_engine/encoder_diagnostics.py",
+      "sha256": "c6c39f5943cb9b1757f3592d4e41c337f835228681529fe74c6527381d0d22bb",
+      "vendored_sha256": "c6c39f5943cb9b1757f3592d4e41c337f835228681529fe74c6527381d0d22bb"
+    },
+    {
+      "source": "freevideo_engine/encoder_memory.py",
+      "sha256": "28f0db0ff9244e127410be024f743b1f775f6752bcc0104be0843d713c8a6f0f",
+      "vendored_sha256": "28f0db0ff9244e127410be024f743b1f775f6752bcc0104be0843d713c8a6f0f"
+    },
+    {
+      "source": "freevideo_engine/encoder_workspace.py",
+      "sha256": "ba1b38f94c94ccd830ddca457d513094b1aff4d1cc67993480ab6cb977eea284",
+      "vendored_sha256": "ba1b38f94c94ccd830ddca457d513094b1aff4d1cc67993480ab6cb977eea284"
+    },
+    {
+      "source": "freevideo_engine/environments.py",
+      "sha256": "43f8447fcfe77e36618438e57cae5be9df06b11c62890dbf6c9c41e0d8c449a5",
+      "vendored_sha256": "43f8447fcfe77e36618438e57cae5be9df06b11c62890dbf6c9c41e0d8c449a5"
+    },
+    {
+      "source": "freevideo_engine/execution_config.py",
+      "sha256": "70c329488dd7c26bbc258c7843877ea5285e3ed8660ff575c3706cf718f6e6ae",
+      "vendored_sha256": "70c329488dd7c26bbc258c7843877ea5285e3ed8660ff575c3706cf718f6e6ae"
+    },
+    {
+      "source": "freevideo_engine/export_slim.py",
+      "sha256": "d9f4cca6d491dc3a335cdb9c453bccbe61964a6f287eaa12e1734a2659037f7c",
+      "vendored_sha256": "d9f4cca6d491dc3a335cdb9c453bccbe61964a6f287eaa12e1734a2659037f7c"
+    },
+    {
+      "source": "freevideo_engine/fa4_guard.py",
+      "sha256": "7d5eaf5abc87ce24995853513849db8f6d144069b878c248ff6b44f30d1b1617",
+      "vendored_sha256": "7d5eaf5abc87ce24995853513849db8f6d144069b878c248ff6b44f30d1b1617"
+    },
+    {
+      "source": "freevideo_engine/failure_details.py",
+      "sha256": "55d0f0a71b97309019a7a1094567a8432aa1e97a97ab0eb334ee88a49b64a7dc",
+      "vendored_sha256": "55d0f0a71b97309019a7a1094567a8432aa1e97a97ab0eb334ee88a49b64a7dc"
+    },
+    {
+      "source": "freevideo_engine/file_ops.py",
+      "sha256": "73bd7893f2c75948ddf8b7626ed0504efb5ae7bf7824a41e7dac81366f547d9f",
+      "vendored_sha256": "73bd7893f2c75948ddf8b7626ed0504efb5ae7bf7824a41e7dac81366f547d9f"
+    },
+    {
+      "source": "freevideo_engine/fp8.py",
+      "sha256": "b60f9c865fbc8725bd3389e37fed58972b0557879dbb51bf537b05e7f07318b2",
+      "vendored_sha256": "b60f9c865fbc8725bd3389e37fed58972b0557879dbb51bf537b05e7f07318b2"
+    },
+    {
+      "source": "freevideo_engine/fp8_gemm.py",
+      "sha256": "1a760c2a461e839e6f791964cef6d45b0c8355fba44078ed902de2c978f43823",
+      "vendored_sha256": "1a760c2a461e839e6f791964cef6d45b0c8355fba44078ed902de2c978f43823"
+    },
+    {
+      "source": "freevideo_engine/fp8_ops.py",
+      "sha256": "d7236cee157876d63c5c928f0a074c9fd7d63d17b8b74fb85fdaec882b581baa",
+      "vendored_sha256": "d7236cee157876d63c5c928f0a074c9fd7d63d17b8b74fb85fdaec882b581baa"
+    },
+    {
+      "source": "freevideo_engine/geometry.py",
+      "sha256": "b6e9446adf5a83f025934198db7655caef3710948e8f6625b032721a6ffc5025",
+      "vendored_sha256": "b6e9446adf5a83f025934198db7655caef3710948e8f6625b032721a6ffc5025"
+    },
+    {
+      "source": "freevideo_engine/gpu_budget.py",
+      "sha256": "8aee523ed442be9c36c1b8c8c9f1c35badab8269cfd828b32e5e6fd8e22dd2ef",
+      "vendored_sha256": "8aee523ed442be9c36c1b8c8c9f1c35badab8269cfd828b32e5e6fd8e22dd2ef"
+    },
+    {
+      "source": "freevideo_engine/hardware.py",
+      "sha256": "eb993e9aac253a24028c0225483f6cd62bf0b24f40717417351bb2145c4b9aac",
+      "vendored_sha256": "eb993e9aac253a24028c0225483f6cd62bf0b24f40717417351bb2145c4b9aac"
+    },
+    {
+      "source": "freevideo_engine/head_chunk.py",
+      "sha256": "caf1ee419e2761f80ed7babb933ec860f95246c3873306ac17105f97198dbb14",
+      "vendored_sha256": "caf1ee419e2761f80ed7babb933ec860f95246c3873306ac17105f97198dbb14"
+    },
+    {
+      "source": "freevideo_engine/hf_auth.py",
+      "sha256": "d6d061ad47957e029bdd3e0e44e0dafe1c12c0332f92f0e65937b226e015bef0",
+      "vendored_sha256": "d6d061ad47957e029bdd3e0e44e0dafe1c12c0332f92f0e65937b226e015bef0"
+    },
+    {
+      "source": "freevideo_engine/input_cache.py",
+      "sha256": "8e5df1758648eace4a9586beabdf7d51b199513add40e5b79cbb57bb6e051aee",
+      "vendored_sha256": "8e5df1758648eace4a9586beabdf7d51b199513add40e5b79cbb57bb6e051aee"
+    },
+    {
+      "source": "freevideo_engine/install_disk.py",
+      "sha256": "19a7d457b413ba5ddb45eac0a4bf9b892e6b7ba5885ad5e8a9520b0097b89497",
+      "vendored_sha256": "19a7d457b413ba5ddb45eac0a4bf9b892e6b7ba5885ad5e8a9520b0097b89497"
+    },
+    {
+      "source": "freevideo_engine/install_schedule.py",
+      "sha256": "6d6c70c43374a70e4578c9cd153f9752aec9144442e361ef86533eba9723685e",
+      "vendored_sha256": "6d6c70c43374a70e4578c9cd153f9752aec9144442e361ef86533eba9723685e"
+    },
+    {
+      "source": "freevideo_engine/install_tuning.py",
+      "sha256": "fc9291b6128bf773ba92878a17f8a73e1d289326f9d1be1bf0458dcc110bb04c",
+      "vendored_sha256": "fc9291b6128bf773ba92878a17f8a73e1d289326f9d1be1bf0458dcc110bb04c"
+    },
+    {
+      "source": "freevideo_engine/int8_ops.py",
+      "sha256": "b385bd00f3d5d3e2f402dc7b5590d6e8d8e09fdc504fa55d1e7713696c888e9e",
+      "vendored_sha256": "b385bd00f3d5d3e2f402dc7b5590d6e8d8e09fdc504fa55d1e7713696c888e9e"
+    },
+    {
+      "source": "freevideo_engine/kernel_capabilities.py",
+      "sha256": "a601c7e1425c3eab38860370502e44604221a6ce1803caa55738c6bdf6b9a33e",
+      "vendored_sha256": "a601c7e1425c3eab38860370502e44604221a6ce1803caa55738c6bdf6b9a33e"
+    },
+    {
+      "source": "freevideo_engine/keyframes.py",
+      "sha256": "9b2c9cb789c286054b7eb3e492479d85a2098b3cf4ea2cbd1952b176256c8e01",
+      "vendored_sha256": "9b2c9cb789c286054b7eb3e492479d85a2098b3cf4ea2cbd1952b176256c8e01"
+    },
+    {
+      "source": "freevideo_engine/local_models.py",
+      "sha256": "7fa156dfaef9fab9625714ce514f2746c6f5006ae70c89716774760d062aa126",
+      "vendored_sha256": "7fa156dfaef9fab9625714ce514f2746c6f5006ae70c89716774760d062aa126"
+    },
+    {
+      "source": "freevideo_engine/locking.py",
+      "sha256": "39b03cedcfd750f75791c77e7a734355e96bcad338ee4f354b1c179f48662c56",
+      "vendored_sha256": "39b03cedcfd750f75791c77e7a734355e96bcad338ee4f354b1c179f48662c56"
+    },
+    {
+      "source": "freevideo_engine/lora_kernels.py",
+      "sha256": "f81f4c20bfe3e3a633c50b913596035852d85fc8d7f837581606cd70dce3db9a",
+      "vendored_sha256": "f81f4c20bfe3e3a633c50b913596035852d85fc8d7f837581606cd70dce3db9a"
+    },
+    {
+      "source": "freevideo_engine/lora_online.py",
+      "sha256": "3ab129dae877f35d8930d8fa86725b53f4b1b20c7ce7f0ede10f732313501207",
+      "vendored_sha256": "3ab129dae877f35d8930d8fa86725b53f4b1b20c7ce7f0ede10f732313501207"
+    },
+    {
+      "source": "freevideo_engine/macos_bootstrap.py",
+      "sha256": "285d8a3729924e817abec04cc3ea04e49a981a11b5a17601f8edd3ac9c952392",
+      "vendored_sha256": "285d8a3729924e817abec04cc3ea04e49a981a11b5a17601f8edd3ac9c952392"
+    },
+    {
+      "source": "freevideo_engine/macos_memory.py",
+      "sha256": "b520cb028711b82caed8777c30831211c0a3cc13d4a2b26828680a26cf799884",
+      "vendored_sha256": "b520cb028711b82caed8777c30831211c0a3cc13d4a2b26828680a26cf799884"
+    },
+    {
+      "source": "freevideo_engine/macos_process_host.py",
+      "sha256": "8f201043cbdb1eb64211cb05b7087d57c1286fd0425e5859ca0812a2c785e860",
+      "vendored_sha256": "8f201043cbdb1eb64211cb05b7087d57c1286fd0425e5859ca0812a2c785e860"
+    },
+    {
+      "source": "freevideo_engine/macos_process_memory.py",
+      "sha256": "883da05af7d8a1f9cfd41ba143f8190f768aad0642c8971607bea273162fc5d5",
+      "vendored_sha256": "883da05af7d8a1f9cfd41ba143f8190f768aad0642c8971607bea273162fc5d5"
+    },
+    {
+      "source": "freevideo_engine/macos_setup.py",
+      "sha256": "d1998e057e07df86a0f094b1ad46f179398f3f47e8b82f0ad190e52a207eb325",
+      "vendored_sha256": "d1998e057e07df86a0f094b1ad46f179398f3f47e8b82f0ad190e52a207eb325"
+    },
+    {
+      "source": "freevideo_engine/media_conditioning.py",
+      "sha256": "d186463fc41f5dd3b653ebda6de3fecc2e52cc33da1eb9396481356af590c53f",
+      "vendored_sha256": "d186463fc41f5dd3b653ebda6de3fecc2e52cc33da1eb9396481356af590c53f"
+    },
+    {
+      "source": "freevideo_engine/media_request.py",
+      "sha256": "cffa043a6342b913b280a3cb161ba5b057d4770a379a07877112f91a0d17aa8a",
+      "vendored_sha256": "cffa043a6342b913b280a3cb161ba5b057d4770a379a07877112f91a0d17aa8a"
+    },
+    {
+      "source": "freevideo_engine/model_status.py",
+      "sha256": "782cfcf792091a7132a0b6a8430f27dcb62b0b465fe39d64e818631f34ca4ab7",
+      "vendored_sha256": "782cfcf792091a7132a0b6a8430f27dcb62b0b465fe39d64e818631f34ca4ab7"
+    },
+    {
+      "source": "freevideo_engine/model_transfer.py",
+      "sha256": "7ea23dc38e0433cf2c0c8e6036f41de0aea3faab7959395808d29fd1716dbea0",
+      "vendored_sha256": "7ea23dc38e0433cf2c0c8e6036f41de0aea3faab7959395808d29fd1716dbea0"
+    },
+    {
+      "source": "freevideo_engine/monitoring.py",
+      "sha256": "846bfda471a65de66b8515aae3898b7391b8f33ee09460dffe4e4f2dcf19c3fb",
+      "vendored_sha256": "846bfda471a65de66b8515aae3898b7391b8f33ee09460dffe4e4f2dcf19c3fb"
+    },
+    {
+      "source": "freevideo_engine/network.py",
+      "sha256": "11c5a657f8dc851a9a1984e18495f88af4c5f4b836f6dad7006129f0ee80cf41",
+      "vendored_sha256": "11c5a657f8dc851a9a1984e18495f88af4c5f4b836f6dad7006129f0ee80cf41"
+    },
+    {
+      "source": "freevideo_engine/offload.py",
+      "sha256": "61b880e8873dba12ed8b77aaf020b574c713a4983f1525c2c5f2527161536228",
+      "vendored_sha256": "61b880e8873dba12ed8b77aaf020b574c713a4983f1525c2c5f2527161536228"
+    },
+    {
+      "source": "freevideo_engine/package_progress.py",
+      "sha256": "b1f836155a46e5e5184ff34dec99d12ca0b10d6659741dc17d4117c6142cbd69",
+      "vendored_sha256": "b1f836155a46e5e5184ff34dec99d12ca0b10d6659741dc17d4117c6142cbd69"
+    },
+    {
+      "source": "freevideo_engine/packing.py",
+      "sha256": "242ffa7908a835e850c19c6a439ee3a9b92cef6b830554a1dfd0d8500808e579",
+      "vendored_sha256": "242ffa7908a835e850c19c6a439ee3a9b92cef6b830554a1dfd0d8500808e579"
+    },
+    {
+      "source": "freevideo_engine/pass_configuration.py",
+      "sha256": "7b7f803248235ded5921961f6da313ac336bce21c80440cb2e112494f298d082",
+      "vendored_sha256": "7b7f803248235ded5921961f6da313ac336bce21c80440cb2e112494f298d082"
+    },
+    {
+      "source": "freevideo_engine/paths.py",
+      "sha256": "cead0ab06b2c313c738ab207df2ffa5e3de9d275f9ffda69915eb3c052c1619d",
+      "vendored_sha256": "cead0ab06b2c313c738ab207df2ffa5e3de9d275f9ffda69915eb3c052c1619d"
+    },
+    {
+      "source": "freevideo_engine/policy.py",
+      "sha256": "bbe1d004e50d0b8850223401188b7a67dc1841387358394430c16b032ce24bac",
+      "vendored_sha256": "bbe1d004e50d0b8850223401188b7a67dc1841387358394430c16b032ce24bac"
+    },
+    {
+      "source": "freevideo_engine/preparation.py",
+      "sha256": "d30e79b3d7bf1832bfeb2e1acb14970a4bd06c6fe91bfe9332930750e22859ed",
+      "vendored_sha256": "d30e79b3d7bf1832bfeb2e1acb14970a4bd06c6fe91bfe9332930750e22859ed"
+    },
+    {
+      "source": "freevideo_engine/prepared_model.py",
+      "sha256": "d13720599ee7b321946347151bccb68a2bd6d7afbbd7b01f094e8b1823f98e9e",
+      "vendored_sha256": "d13720599ee7b321946347151bccb68a2bd6d7afbbd7b01f094e8b1823f98e9e"
+    },
+    {
+      "source": "freevideo_engine/prism_layout.py",
+      "sha256": "1d71da3bdac83e7183683e36774f1182566ce9fc11c1fbc84fb839df9a604d83",
+      "vendored_sha256": "1d71da3bdac83e7183683e36774f1182566ce9fc11c1fbc84fb839df9a604d83"
+    },
+    {
+      "source": "freevideo_engine/prism_model/NOTICE",
+      "sha256": "73cc336ba0d6916729f17051f9b52d90b4b784313ed8356a44a63f7a614eb43a"
+    },
+    {
+      "source": "freevideo_engine/prism_model/__init__.py",
+      "sha256": "97a0f102e0fe300c81c53dcfe218674e2cbad7f33b353683cf9ac21b68944498",
+      "vendored_sha256": "97a0f102e0fe300c81c53dcfe218674e2cbad7f33b353683cf9ac21b68944498"
+    },
+    {
+      "source": "freevideo_engine/prism_model/audio_graph.py",
+      "sha256": "b776aebc199820cb9591b9747c81fe871665e164baa1a3ab97aa328d860227e6",
+      "vendored_sha256": "b776aebc199820cb9591b9747c81fe871665e164baa1a3ab97aa328d860227e6"
+    },
+    {
+      "source": "freevideo_engine/prism_model/block_sparse_attention/__init__.py",
+      "sha256": "a2025fb19d8e52f113a2f17f14b3316d34ba4cc7be7eac5e1be2014a516d8ca2",
+      "vendored_sha256": "a2025fb19d8e52f113a2f17f14b3316d34ba4cc7be7eac5e1be2014a516d8ca2"
+    },
+    {
+      "source": "freevideo_engine/prism_model/block_sparse_attention/bsa_interface.py",
+      "sha256": "18e532dda87ffd599fa184996aee912235c42c0a0f0e4a4305a80c67d9f284cc",
+      "vendored_sha256": "18e532dda87ffd599fa184996aee912235c42c0a0f0e4a4305a80c67d9f284cc"
+    },
+    {
+      "source": "freevideo_engine/prism_model/block_sparse_attention/common.py",
+      "sha256": "0ee3401f06cc69902f6e50f8573d8bce55c5d27ad19ced1dfc475b001b309d97",
+      "vendored_sha256": "0ee3401f06cc69902f6e50f8573d8bce55c5d27ad19ced1dfc475b001b309d97"
+    },
+    {
+      "source": "freevideo_engine/prism_model/block_sparse_attention/dynamic_block_attention.py",
+      "sha256": "b19b670934ddf1c9cebad08bfd5780cf871b3cee101af5700aa935ceb50209df",
+      "vendored_sha256": "b19b670934ddf1c9cebad08bfd5780cf871b3cee101af5700aa935ceb50209df"
+    },
+    {
+      "source": "freevideo_engine/prism_model/block_sparse_attention/dynamic_block_shape.py",
+      "sha256": "4be5136a3b5d39d54771648442f1133b8eae58c047f32e4da9f9bd2bdeb132e7",
+      "vendored_sha256": "4be5136a3b5d39d54771648442f1133b8eae58c047f32e4da9f9bd2bdeb132e7"
+    },
+    {
+      "source": "freevideo_engine/prism_model/block_sparse_attention/flash_attn_bsa_varlen_mask.py",
+      "sha256": "ed46493a75ddb459476be7d32eb50195c65815d6368adb1b4fc7498ca612e7cb",
+      "vendored_sha256": "ed46493a75ddb459476be7d32eb50195c65815d6368adb1b4fc7498ca612e7cb"
+    },
+    {
+      "source": "freevideo_engine/prism_model/dac_vae.py",
+      "sha256": "91c346b28f5d66584d25db7b0568e42813d5ad0ec32ab7a90e258202b09bb447",
+      "vendored_sha256": "91c346b28f5d66584d25db7b0568e42813d5ad0ec32ab7a90e258202b09bb447"
+    },
+    {
+      "source": "freevideo_engine/prism_model/fast_vae.py",
+      "sha256": "af4160a108cce59c792639cd5d069325c0dd791474b4d4b9bfe01806f2e1e7dc",
+      "vendored_sha256": "af4160a108cce59c792639cd5d069325c0dd791474b4d4b9bfe01806f2e1e7dc"
+    },
+    {
+      "source": "freevideo_engine/prism_model/flow_match_pair.py",
+      "sha256": "b4db7ee1a37951653a95a574519bcba07bc9553b57d0fe45351a3bede81573e1",
+      "vendored_sha256": "b4db7ee1a37951653a95a574519bcba07bc9553b57d0fe45351a3bede81573e1"
+    },
+    {
+      "source": "freevideo_engine/prism_model/interactionv2.py",
+      "sha256": "35311f1ac397da8a2c29f3870a575036ea38fab7849e45defc16fb23d0cbf73d",
+      "vendored_sha256": "35311f1ac397da8a2c29f3870a575036ea38fab7849e45defc16fb23d0cbf73d"
+    },
+    {
+      "source": "freevideo_engine/prism_model/ivpq_fast.py",
+      "sha256": "197ca2e6d87a154f318873fa76336ee92ce5238d155ffd3e456840744f45404c",
+      "vendored_sha256": "ab7206717c54c59c30842d56f146fc0a1fedc3b3d0ae3bb15c21a766b4be3d62"
+    },
+    {
+      "source": "freevideo_engine/prism_model/kv_calib.py",
+      "sha256": "57c5a1bbf66329053ebed276e408f36492ddccd89bdfe0b9a88198f27b46211f",
+      "vendored_sha256": "57c5a1bbf66329053ebed276e408f36492ddccd89bdfe0b9a88198f27b46211f"
+    },
+    {
+      "source": "freevideo_engine/prism_model/mova.py",
+      "sha256": "2daae2d15365b66e46bb7bda3378f27eac3fc9fa709d9d4aed66bf1f4ad83972",
+      "vendored_sha256": "2daae2d15365b66e46bb7bda3378f27eac3fc9fa709d9d4aed66bf1f4ad83972"
+    },
+    {
+      "source": "freevideo_engine/prism_model/qblock.py",
+      "sha256": "73045c61c5c3293648f43d02642b3bae14681ea935ca046182ade616d0596149",
+      "vendored_sha256": "73045c61c5c3293648f43d02642b3bae14681ea935ca046182ade616d0596149"
+    },
+    {
+      "source": "freevideo_engine/prism_model/qlinear.py",
+      "sha256": "c76d68ef38b7f855fd677e335a30834fefc8b2471cb71fe44252f1cea012cf73",
+      "vendored_sha256": "c76d68ef38b7f855fd677e335a30834fefc8b2471cb71fe44252f1cea012cf73"
+    },
+    {
+      "source": "freevideo_engine/prism_model/qlora.py",
+      "sha256": "0126667518a38c84939082a3b85ade1c1505ce9ea37f391f1a84066b8d0d4de1",
+      "vendored_sha256": "0126667518a38c84939082a3b85ade1c1505ce9ea37f391f1a84066b8d0d4de1"
+    },
+    {
+      "source": "freevideo_engine/prism_model/rope.py",
+      "sha256": "e5dbee009380dbc57901691151ae8420cadff5ef235fb9a046785c6cc6519a9d",
+      "vendored_sha256": "e5dbee009380dbc57901691151ae8420cadff5ef235fb9a046785c6cc6519a9d"
+    },
+    {
+      "source": "freevideo_engine/prism_model/sage_bsa.py",
+      "sha256": "12d9481c98ed5cfdf6a92f47b7f27ee1da5caddf71944d3eb82d632688789962",
+      "vendored_sha256": "12d9481c98ed5cfdf6a92f47b7f27ee1da5caddf71944d3eb82d632688789962"
+    },
+    {
+      "source": "freevideo_engine/prism_model/sage_bsa_f16acc.py",
+      "sha256": "e8ff97be216327307a37774e240757a780c653e9acfd7fa11df750d07d005507",
+      "vendored_sha256": "e8ff97be216327307a37774e240757a780c653e9acfd7fa11df750d07d005507"
+    },
+    {
+      "source": "freevideo_engine/prism_model/sage_tune.py",
+      "sha256": "76cca98c60cd2045d30125cb44cc703eb431ac5aefed47cc4861f07f6230ccac",
+      "vendored_sha256": "76cca98c60cd2045d30125cb44cc703eb431ac5aefed47cc4861f07f6230ccac"
+    },
+    {
+      "source": "freevideo_engine/prism_model/sampling.py",
+      "sha256": "cd9b3acff2d1f5bd362c9fe1db68e6e0a87914cd91c0b2f864a77860f6991c45",
+      "vendored_sha256": "5ddee1bf82f342626ca41bcc17784db8e92493d9d0e4613f952b6356ebb8a3e4"
+    },
+    {
+      "source": "freevideo_engine/prism_model/wan_audio_dit.py",
+      "sha256": "827384407b75108085257bdcd19beebde627282b49d819abec3d60bfef376431",
+      "vendored_sha256": "827384407b75108085257bdcd19beebde627282b49d819abec3d60bfef376431"
+    },
+    {
+      "source": "freevideo_engine/prism_model/wan_video_dit.py",
+      "sha256": "f9ef683762c3a2b2ab73bfd62ee2a7e922de953bb56f1a41bf09cf0cdd6aca7e",
+      "vendored_sha256": "f9ef683762c3a2b2ab73bfd62ee2a7e922de953bb56f1a41bf09cf0cdd6aca7e"
+    },
+    {
+      "source": "freevideo_engine/prism_policy.py",
+      "sha256": "7d95eacc3db32e224275158e9e6305dabec60ff15fe591ba0bcf2862802c627b",
+      "vendored_sha256": "7d95eacc3db32e224275158e9e6305dabec60ff15fe591ba0bcf2862802c627b"
+    },
+    {
+      "source": "freevideo_engine/prism_prepare.py",
+      "sha256": "203d16f8fcf55c8993e2b15acae14cc99278f82d88bb16973fac8279b3dbcc6a",
+      "vendored_sha256": "203d16f8fcf55c8993e2b15acae14cc99278f82d88bb16973fac8279b3dbcc6a"
+    },
+    {
+      "source": "freevideo_engine/prism_runtime.py",
+      "sha256": "ae472efe713c1502da659713e6f0c0b36bef5284a0ddf4b1fe45e344590d012c",
+      "vendored_sha256": "ae472efe713c1502da659713e6f0c0b36bef5284a0ddf4b1fe45e344590d012c"
+    },
+    {
+      "source": "freevideo_engine/prism_tiers.json",
+      "sha256": "7453463fe7d70890466cd107aa7d1548165b69b79eb232cb0e8889d476e6f486"
+    },
+    {
+      "source": "freevideo_engine/processes.py",
+      "sha256": "eaede45ff0b66565ad9b0e7bae723ad85c09e9374fcf020591d25f8e69e6a17b",
+      "vendored_sha256": "eaede45ff0b66565ad9b0e7bae723ad85c09e9374fcf020591d25f8e69e6a17b"
+    },
+    {
+      "source": "freevideo_engine/provider_resume.py",
+      "sha256": "e7a4bf1030c31702ffad65bffe3de11fa793a62599df6c50adae8f5dffa49e59",
+      "vendored_sha256": "e7a4bf1030c31702ffad65bffe3de11fa793a62599df6c50adae8f5dffa49e59"
+    },
+    {
+      "source": "freevideo_engine/provision.py",
+      "sha256": "288410c79b7dd2bc0b7b02a4c1f440e4233ba5694b8fc2f5bb581bcceba704b3",
+      "vendored_sha256": "288410c79b7dd2bc0b7b02a4c1f440e4233ba5694b8fc2f5bb581bcceba704b3"
+    },
+    {
+      "source": "freevideo_engine/proxy.py",
+      "sha256": "fb089770717018321809964c21483f5b4befbd52687c0e103537f241d5ee8b4b",
+      "vendored_sha256": "fb089770717018321809964c21483f5b4befbd52687c0e103537f241d5ee8b4b"
+    },
+    {
+      "source": "freevideo_engine/ram.py",
+      "sha256": "1ce4d2f9cabd9c12fb21c20a475aff66c1f6178bb5c1f3f9a06b5f184238a475",
+      "vendored_sha256": "1ce4d2f9cabd9c12fb21c20a475aff66c1f6178bb5c1f3f9a06b5f184238a475"
+    },
+    {
+      "source": "freevideo_engine/reference_sampler.py",
+      "sha256": "13369f32d77b330ba7487d8600551b1bec33c07974e9cd9391a60d31efd1cbe8",
+      "vendored_sha256": "13369f32d77b330ba7487d8600551b1bec33c07974e9cd9391a60d31efd1cbe8"
+    },
+    {
+      "source": "freevideo_engine/refine.py",
+      "sha256": "245f374b596b7fae05a44afbaa72670530ebe695c54a50b27956ff18acdc50d6",
+      "vendored_sha256": "245f374b596b7fae05a44afbaa72670530ebe695c54a50b27956ff18acdc50d6"
+    },
+    {
+      "source": "freevideo_engine/refine_schedule.py",
+      "sha256": "2168af52f05385ce8d60fba09d9ae586daf16e5cc199b08ba5ac237c7a94b0ca",
+      "vendored_sha256": "2168af52f05385ce8d60fba09d9ae586daf16e5cc199b08ba5ac237c7a94b0ca"
+    },
+    {
+      "source": "freevideo_engine/residual.py",
+      "sha256": "3bd502c6a61b619accabe0b14fa4e15fe391417b9a12790a0ce52c82e0714d83",
+      "vendored_sha256": "3bd502c6a61b619accabe0b14fa4e15fe391417b9a12790a0ce52c82e0714d83"
+    },
+    {
+      "source": "freevideo_engine/resource_history.py",
+      "sha256": "05d6d617bf465f62930e9e5018feac5b5e1237682bebf0704dbb58798ce3f34e",
+      "vendored_sha256": "05d6d617bf465f62930e9e5018feac5b5e1237682bebf0704dbb58798ce3f34e"
+    },
+    {
+      "source": "freevideo_engine/runtime.py",
+      "sha256": "e625fa82137d256ffe74a06e9f74ec5f9f88233f56315f713436aa9b762f764b",
+      "vendored_sha256": "e625fa82137d256ffe74a06e9f74ec5f9f88233f56315f713436aa9b762f764b"
+    },
+    {
+      "source": "freevideo_engine/sampling_assets.py",
+      "sha256": "adfeced349f152cd154981593fb2fd19092d6dc857b8f3a2a09786acdbb82cf4",
+      "vendored_sha256": "adfeced349f152cd154981593fb2fd19092d6dc857b8f3a2a09786acdbb82cf4"
+    },
+    {
+      "source": "freevideo_engine/sampling_memory.py",
+      "sha256": "ffc798d57e7e698ced17ce05f15c0b0a2bf31c18d7b89c801b99ee95e9b8bc1d",
+      "vendored_sha256": "ffc798d57e7e698ced17ce05f15c0b0a2bf31c18d7b89c801b99ee95e9b8bc1d"
+    },
+    {
+      "source": "freevideo_engine/sampling_progress.py",
+      "sha256": "6be6ad387f6fea56108aca6b986c1c8e8929eb543e46dcab8ca74b06c33ee2b4",
+      "vendored_sha256": "6be6ad387f6fea56108aca6b986c1c8e8929eb543e46dcab8ca74b06c33ee2b4"
+    },
+    {
+      "source": "freevideo_engine/storage.py",
+      "sha256": "586c7afda76514c88254395a6d84b31888ef4c99195bdd933f5938a049f5050c",
+      "vendored_sha256": "586c7afda76514c88254395a6d84b31888ef4c99195bdd933f5938a049f5050c"
+    },
+    {
+      "source": "freevideo_engine/streamed_weights.py",
+      "sha256": "6378c88386b6cb43c190a5e97460bd73433c7f2dfe48c88959ec470a469da131",
+      "vendored_sha256": "6378c88386b6cb43c190a5e97460bd73433c7f2dfe48c88959ec470a469da131"
+    },
+    {
+      "source": "freevideo_engine/system.py",
+      "sha256": "3f3330b4fcf78128ab4b91a8fdff3ee9a8a397066542d01897cc7953fdd539b9",
+      "vendored_sha256": "3f3330b4fcf78128ab4b91a8fdff3ee9a8a397066542d01897cc7953fdd539b9"
+    },
+    {
+      "source": "freevideo_engine/tensor_io.py",
+      "sha256": "ba9b572ff495625a990851ae563a6d546f6f44c6eec44be0c3e35ea96ed32db3",
+      "vendored_sha256": "ba9b572ff495625a990851ae563a6d546f6f44c6eec44be0c3e35ea96ed32db3"
+    },
+    {
+      "source": "freevideo_engine/terminal_ui.py",
+      "sha256": "386c50c6bdbe8a173b59cb081bb9b6f62e630712a997de7b629d4f50f8a77910",
+      "vendored_sha256": "386c50c6bdbe8a173b59cb081bb9b6f62e630712a997de7b629d4f50f8a77910"
+    },
+    {
+      "source": "freevideo_engine/torch_compat.py",
+      "sha256": "ce3ca8d066fe3ea711aa5512f1abe88cbfdcf0069d3f7dd1a4a9fa58df86bbdb",
+      "vendored_sha256": "ce3ca8d066fe3ea711aa5512f1abe88cbfdcf0069d3f7dd1a4a9fa58df86bbdb"
+    },
+    {
+      "source": "freevideo_engine/torch_download.py",
+      "sha256": "7f7aaa0a98bfdfc227086762912b14fb6fccfba9b1bd8969a66d8cf83b65b8ea",
+      "vendored_sha256": "7f7aaa0a98bfdfc227086762912b14fb6fccfba9b1bd8969a66d8cf83b65b8ea"
+    },
+    {
+      "source": "freevideo_engine/transfer_handoff.py",
+      "sha256": "d699e2fbcfe8f5b44d1972e7e3d2d6dc0b845323f5db87f8c30449a47e8c1adb",
+      "vendored_sha256": "d699e2fbcfe8f5b44d1972e7e3d2d6dc0b845323f5db87f8c30449a47e8c1adb"
+    },
+    {
+      "source": "freevideo_engine/triton_compat.py",
+      "sha256": "15442a26318218c3d72a5fd5db274ff958d31aaac967e2b671b1c53020e805b3",
+      "vendored_sha256": "15442a26318218c3d72a5fd5db274ff958d31aaac967e2b671b1c53020e805b3"
+    },
+    {
+      "source": "freevideo_engine/tuning.py",
+      "sha256": "68c2a1359fcf2a915af6e6a519e3690c338d4eccf6e89df384a94aaeb8f471db",
+      "vendored_sha256": "68c2a1359fcf2a915af6e6a519e3690c338d4eccf6e89df384a94aaeb8f471db"
+    },
+    {
+      "source": "freevideo_engine/two_pass.py",
+      "sha256": "7f493fd74e0e7ee6419929bef58c6aa281379f66b5a3e3fe585da58484662b37",
+      "vendored_sha256": "7f493fd74e0e7ee6419929bef58c6aa281379f66b5a3e3fe585da58484662b37"
+    },
+    {
+      "source": "freevideo_engine/uv_bootstrap.py",
+      "sha256": "9059e8c0bcc6613f34d85143613e38a6b5b20aa48f23ee9b7032e1a115047927",
+      "vendored_sha256": "9059e8c0bcc6613f34d85143613e38a6b5b20aa48f23ee9b7032e1a115047927"
+    },
+    {
+      "source": "freevideo_engine/validation.py",
+      "sha256": "5aa3e387f85f350720e18b32264e5c8ac045bd37a7bf94513ac46681e39c03de",
+      "vendored_sha256": "5aa3e387f85f350720e18b32264e5c8ac045bd37a7bf94513ac46681e39c03de"
+    },
+    {
+      "source": "freevideo_engine/video_models.py",
+      "sha256": "9c065e7b2045cea2f5709f7b9514330b4cc6bd49182ed1d3b1748a19385b7d42",
+      "vendored_sha256": "9c065e7b2045cea2f5709f7b9514330b4cc6bd49182ed1d3b1748a19385b7d42"
+    },
+    {
+      "source": "freevideo_engine/weight_only.py",
+      "sha256": "899635cc5dc95ab552d008bdce56b0a8798a8770aa922b6457bb8e9adc0ccb32",
+      "vendored_sha256": "899635cc5dc95ab552d008bdce56b0a8798a8770aa922b6457bb8e9adc0ccb32"
+    },
+    {
+      "source": "freevideo_engine/weights.py",
+      "sha256": "fb818cff05ec5d7e87a07ffba9998156e4cd6c7ca2f7ee7db0c2d749685d34e1",
+      "vendored_sha256": "fb818cff05ec5d7e87a07ffba9998156e4cd6c7ca2f7ee7db0c2d749685d34e1"
+    },
+    {
+      "source": "freevideo_engine/win32.py",
+      "sha256": "5e61486a78d01854d3f55a45f5f9b4e190552e841b062324835a077eed53c798",
+      "vendored_sha256": "5e61486a78d01854d3f55a45f5f9b4e190552e841b062324835a077eed53c798"
+    },
+    {
+      "source": "freevideo_engine/windows_gpu_memory.py",
+      "sha256": "e3ff6e00e24be5b15af20c6809a10d2e4ba5b2baba006031c54c46bd3947e757",
+      "vendored_sha256": "e3ff6e00e24be5b15af20c6809a10d2e4ba5b2baba006031c54c46bd3947e757"
+    },
+    {
+      "source": "freevideo_engine/windows_ux.py",
+      "sha256": "8e63cc73f01f04adfaef3c05b0747ec9fd96f10579c466e0767373c98769fccc",
+      "vendored_sha256": "8e63cc73f01f04adfaef3c05b0747ec9fd96f10579c466e0767373c98769fccc"
+    }
+  ]
+}

@@ -23,7 +23,7 @@ def serialized_widgets(node, definition):
                 try:
                     result[name] = next(values)
                     # ComfyUI adds the seed control widget to this node's INT seed.
-                    if node["type"] == "PrismNativeSampler" and name == "seed":
+                    if node["type"] in ("PrismNativeSampler", "PrismAcceleratedSampler") and name == "seed":
                         control = next(values)
                         assert control in ("fixed", "increment", "decrement", "randomize")
                 except StopIteration as error:

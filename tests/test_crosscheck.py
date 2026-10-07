@@ -86,7 +86,7 @@ def _package_fixture(tmp_path, monkeypatch, include_reference=True):
     import scripts.package_workflows as packaging
     folder = tmp_path / "examples"
     folder.mkdir()
-    for index in range(1, 6):
+    for index in range(1, 10):
         (folder / f"0{index}_canvas.json").write_text(json.dumps(
             {"version": 0.4, "nodes": [{"id": 1}], "links": []}), encoding="utf-8")
     (folder / "README.md").write_text("Canvas instructions", encoding="utf-8")
@@ -128,7 +128,7 @@ def test_successful_package_contains_exact_inputs_and_passes_crc(tmp_path, monke
     packaging, folder, target = _package_fixture(tmp_path, monkeypatch)
     packaging.main()
     with zipfile.ZipFile(target) as archive:
-        expected = {f"0{index}_canvas.json" for index in range(1, 6)} | {"README.md", "prism_official_case5.png"}
+        expected = {f"0{index}_canvas.json" for index in range(1, 10)} | {"README.md", "prism_official_case5.png"}
         assert set(archive.namelist()) == expected
         assert archive.testzip() is None
         assert all(archive.read(name) == (folder / name).read_bytes() for name in expected)
@@ -159,3 +159,38 @@ def test_runtime_accepts_default_sparse_and_reaches_device_validation(tmp_path, 
     monkeypatch.setattr(runtime, "load_component", lambda *a, **k: pytest.fail("CPU rejected before model load"))
     with pytest.raises(RuntimeError, match="requires a CUDA GPU"):
         runtime.run(parts, None, {"mode": "t2va_white_reference"}, sparse=sparse, device="cpu")
+
+
+def test_native_kitchen_keeps_text_and_audio_activations_floating_point(tmp_path, monkeypatch):
+    from prism.format import COMPONENTS, Component
+    import prism.runtime as runtime
+    # Exercise native runtime routing without performing GPU sampling.
+    kinds = ["text_encoder", "audio_dit", "dual_tower_bridge", "video_dit"] + [k for k in COMPONENTS if k not in ("text_encoder", "audio_dit", "dual_tower_bridge", "video_dit")]
+    parts = {kind: Component(tmp_path, kind, {}, {"prism.bundle_id": "crosscheck"}) for kind in kinds}
+    calls = []
+    def load(component, **options):
+        calls.append((component.kind, options["backend"]))
+        if component.kind == "video_dit":
+            raise RuntimeError("stop before diffusion loading")
+        return torch.nn.Identity()
+    monkeypatch.setattr(runtime, "load_component", load)
+    monkeypatch.setattr(torch.cuda, "is_available", lambda: False)
+    with pytest.raises(RuntimeError, match="stop before diffusion loading"):
+        runtime.run(parts, None, {"mode": "t2va_white_reference", "int8_backend": "kitchen"}, device="cuda")
+    assert calls == [("text_encoder", "portable"), ("audio_dit", "portable"),
+                     ("dual_tower_bridge", "portable"), ("video_dit", "kitchen")]
+
+
+def test_native_inference_changes_invalidate_cached_audio(tmp_path, monkeypatch):
+    import prism.runtime as runtime
+    from pathlib import Path
+    import shutil
+    copied = tmp_path / 'prism'
+    original = runtime.implementation_fingerprint()
+    shutil.copytree(Path(runtime.__file__).parent, copied,
+                    ignore=shutil.ignore_patterns('__pycache__', 'acceleration'))
+    monkeypatch.setattr(runtime, '__file__', str(copied / 'runtime.py'))
+    before = runtime.implementation_fingerprint()
+    assert before == original
+    (copied / 'quantization.py').write_text('changed audio arithmetic', encoding='utf-8')
+    assert before != runtime.implementation_fingerprint()

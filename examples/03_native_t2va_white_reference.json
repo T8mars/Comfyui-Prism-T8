@@ -1,12 +1,11 @@
 {
-  "id": "649372ce-1b79-42b6-89fc-3599ce55ca45",
-  "revision": 0,
   "last_node_id": 13,
   "last_link_id": 14,
   "nodes": [
     {
       "id": 1,
       "type": "PrismVideoDiTLoader",
+      "title": "Video Dit",
       "pos": [
         50,
         60
@@ -28,7 +27,6 @@
           ]
         }
       ],
-      "title": "Video Dit",
       "properties": {
         "Node name for S&R": "PrismVideoDiTLoader"
       },
@@ -39,6 +37,7 @@
     {
       "id": 2,
       "type": "PrismLowNoiseDiTLoader",
+      "title": "Video Dit 2",
       "pos": [
         50,
         164
@@ -60,7 +59,6 @@
           ]
         }
       ],
-      "title": "Video Dit 2",
       "properties": {
         "Node name for S&R": "PrismLowNoiseDiTLoader"
       },
@@ -71,6 +69,7 @@
     {
       "id": 3,
       "type": "PrismAudioDiTLoader",
+      "title": "Audio Dit",
       "pos": [
         50,
         268
@@ -92,7 +91,6 @@
           ]
         }
       ],
-      "title": "Audio Dit",
       "properties": {
         "Node name for S&R": "PrismAudioDiTLoader"
       },
@@ -103,6 +101,7 @@
     {
       "id": 4,
       "type": "PrismBridgeLoader",
+      "title": "Dual Tower Bridge",
       "pos": [
         50,
         372
@@ -124,7 +123,6 @@
           ]
         }
       ],
-      "title": "Dual Tower Bridge",
       "properties": {
         "Node name for S&R": "PrismBridgeLoader"
       },
@@ -135,6 +133,7 @@
     {
       "id": 5,
       "type": "PrismTextEncoderLoader",
+      "title": "Text Encoder",
       "pos": [
         50,
         476
@@ -156,7 +155,6 @@
           ]
         }
       ],
-      "title": "Text Encoder",
       "properties": {
         "Node name for S&R": "PrismTextEncoderLoader"
       },
@@ -167,6 +165,7 @@
     {
       "id": 6,
       "type": "PrismVideoVAELoader",
+      "title": "Video Vae",
       "pos": [
         50,
         580
@@ -188,7 +187,6 @@
           ]
         }
       ],
-      "title": "Video Vae",
       "properties": {
         "Node name for S&R": "PrismVideoVAELoader"
       },
@@ -199,6 +197,7 @@
     {
       "id": 7,
       "type": "PrismAudioVAELoader",
+      "title": "Audio Vae",
       "pos": [
         50,
         684
@@ -220,7 +219,6 @@
           ]
         }
       ],
-      "title": "Audio Vae",
       "properties": {
         "Node name for S&R": "PrismAudioVAELoader"
       },
@@ -231,6 +229,7 @@
     {
       "id": 8,
       "type": "PrismNativePipeline",
+      "title": "Official Native Pipeline",
       "pos": [
         1010,
         60
@@ -240,7 +239,7 @@
         195
       ],
       "flags": {},
-      "order": 8,
+      "order": 7,
       "mode": 0,
       "inputs": [
         {
@@ -288,14 +287,15 @@
           ]
         }
       ],
-      "title": "Official Native Pipeline",
       "properties": {
         "Node name for S&R": "PrismNativePipeline"
-      }
+      },
+      "widgets_values": []
     },
     {
       "id": 9,
       "type": "PrismSparseOptions",
+      "title": "Native Sparse Attention Options",
       "pos": [
         540,
         460
@@ -305,7 +305,7 @@
         290
       ],
       "flags": {},
-      "order": 7,
+      "order": 8,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -317,7 +317,6 @@
           ]
         }
       ],
-      "title": "Native Sparse Attention Options",
       "properties": {
         "Node name for S&R": "PrismSparseOptions"
       },
@@ -332,6 +331,7 @@
     {
       "id": 10,
       "type": "PrismNativeSampler",
+      "title": "Native Joint Video + Audio Sampler",
       "pos": [
         1010,
         300
@@ -351,13 +351,11 @@
         },
         {
           "name": "reference_image",
-          "shape": 7,
           "type": "IMAGE",
           "link": null
         },
         {
           "name": "sparse_options",
-          "shape": 7,
           "type": "PRISM_SPARSE_OPTIONS",
           "link": 9
         }
@@ -387,7 +385,6 @@
           ]
         }
       ],
-      "title": "Native Joint Video + Audio Sampler",
       "properties": {
         "Node name for S&R": "PrismNativeSampler"
       },
@@ -396,16 +393,16 @@
         "A wide view of turquoise ocean waves gently rolling onto a sandy beach in daylight. <sfx>Gentle surf and distant seabirds.</sfx>",
         "",
         "色调艳丽，过曝，静态，细节模糊不清，字幕，风格，作品，画作，画面，静止，整体发灰，最差质量，低质量，JPEG压缩残留，丑陋的，残缺的，多余的手指",
-        848,
-        480,
-        49,
-        24,
+        1280,
+        720,
+        205,
+        24.0,
         50,
-        5,
+        5.0,
         42,
         "fixed",
-        9,
-        7,
+        7.0,
+        7.0,
         "block",
         "sdpa",
         "portable",
@@ -418,6 +415,7 @@
     {
       "id": 11,
       "type": "SaveImage",
+      "title": "Save Every Frame (workflow embedded)",
       "pos": [
         1550,
         60
@@ -436,14 +434,7 @@
           "link": 10
         }
       ],
-      "outputs": [
-        {
-          "name": "images",
-          "type": "IMAGE",
-          "links": null
-        }
-      ],
-      "title": "Save Every Frame (workflow embedded)",
+      "outputs": [],
       "properties": {
         "Node name for S&R": "SaveImage"
       },
@@ -454,6 +445,7 @@
     {
       "id": 12,
       "type": "SaveAudio",
+      "title": "Save Audio (48 kHz FLAC)",
       "pos": [
         1550,
         410
@@ -479,7 +471,6 @@
           "links": null
         }
       ],
-      "title": "Save Audio (48 kHz FLAC)",
       "properties": {
         "Node name for S&R": "SaveAudio"
       },
@@ -490,6 +481,7 @@
     {
       "id": 13,
       "type": "PrismSaveVideo",
+      "title": "Save MP4 + Audio / Canvas Preview",
       "pos": [
         1550,
         670
@@ -515,10 +507,10 @@
         {
           "name": "fps",
           "type": "FLOAT",
+          "link": 14,
           "widget": {
             "name": "fps"
-          },
-          "link": 14
+          }
         }
       ],
       "outputs": [
@@ -528,12 +520,11 @@
           "links": null
         }
       ],
-      "title": "Save MP4 + Audio / Canvas Preview",
       "properties": {
         "Node name for S&R": "PrismSaveVideo"
       },
       "widgets_values": [
-        24,
+        24.0,
         "Prism/03_native_t2va_white_reference/video"
       ]
     }
@@ -654,7 +645,6 @@
   ],
   "groups": [
     {
-      "id": 1,
       "title": "1. Standalone native components",
       "bounding": [
         20,
@@ -663,10 +653,10 @@
         850
       ],
       "color": "#3f789e",
+      "font_size": 22,
       "flags": {}
     },
     {
-      "id": 2,
       "title": "2. Reference / sparse options",
       "bounding": [
         510,
@@ -675,10 +665,10 @@
         850
       ],
       "color": "#3f789e",
+      "font_size": 22,
       "flags": {}
     },
     {
-      "id": 3,
       "title": "3. Joint video / audio sampling",
       "bounding": [
         980,
@@ -687,10 +677,10 @@
         1150
       ],
       "color": "#3f789e",
+      "font_size": 22,
       "flags": {}
     },
     {
-      "id": 4,
       "title": "4. Frames / audio / MP4",
       "bounding": [
         1520,
@@ -699,24 +689,24 @@
         1150
       ],
       "color": "#3f789e",
+      "font_size": 22,
       "flags": {}
     }
   ],
   "config": {},
   "extra": {
     "ds": {
-      "scale": 0.46153846153846156,
+      "scale": 0.64,
       "offset": [
-        371.6666666666665,
-        195
+        30,
+        30
       ]
     },
     "prism": {
       "name": "03_native_t2va_white_reference",
       "format": "ComfyUI canvas",
       "reference_source": "Tencent-Hunyuan/Prism assets/ti2va_cases/case-5"
-    },
-    "frontendVersion": "1.53.6"
+    }
   },
   "version": 0.4
 }

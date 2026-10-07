@@ -115,7 +115,8 @@ def main():
         "02_native_i2va_kitchen_bsa": workflow("02_native_i2va_kitchen_bsa", {"int8_backend": "kitchen"}, sparse=True),
         "03_native_t2va_white_reference": workflow("03_native_t2va_white_reference", {}, white=True),
         "04_native_i2va_720p": workflow("04_native_i2va_720p", {"width": 1280, "height": 720, "num_frames": 205, "vae_tiling": True}),
-        "05_native_i2va_validation": workflow("05_native_i2va_validation", {"int8_backend": "kitchen"})}
+        "05_native_i2va_validation": workflow("05_native_i2va_validation", {"int8_backend": "kitchen",
+            "width": 848, "height": 480, "num_frames": 49})}
     for name, data in presets.items():
         (folder / f"{name}.json").write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
     print(f"Saved {len(presets)} canvas workflows to {folder}")

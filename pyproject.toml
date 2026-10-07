@@ -1,6 +1,6 @@
 [project]
 name = "prism-t8"
-version = "0.1.4"
+version = "0.1.5"
 description = "Native Prism joint video/audio inference with standalone INT8 ConvRot components"
 requires-python = ">=3.10"
 license = { file = "LICENSE" }
@@ -13,6 +13,8 @@ dependencies = [
     "ftfy>=6.3",
     "descript-audiotools>=0.7.2",
     "sentencepiece>=0.2",
+    "filelock>=3.13",
+    "psutil>=5.9",
 ]
 
 [project.urls]

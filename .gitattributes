@@ -1,0 +1,2 @@
+# Preserve the exact bytes recorded in the pinned FreeVideo source manifest.
+/prism/acceleration/vendor/** -text

@@ -10,8 +10,8 @@ ROOT = Path(__file__).resolve().parents[1]
 def main():
     folder = ROOT / "examples"
     workflows = sorted(folder.glob("0*.json"))
-    if len(workflows) != 5:
-        raise ValueError("Expected all five canvas workflows")
+    if len(workflows) != 9:
+        raise ValueError("Expected five native and four FreeVideo canvas workflows")
     for path in workflows:
         canvas = json.loads(path.read_text(encoding="utf-8"))
         if canvas.get("version") != 0.4 or not canvas.get("nodes") or "links" not in canvas:

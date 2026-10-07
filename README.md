@@ -4,9 +4,21 @@
 
 [模型下载](https://huggingface.co/t8star/Prism-Comfy/tree/main) · [画布工作流](https://github.com/T8mars/Comfyui-Prism-T8/blob/main/examples/Prism-canvas-workflows.zip) · [真实 480p 样片](https://github.com/T8mars/Comfyui-Prism-T8/blob/main/examples/sample-480p.mp4)
 
+## FreeVideo 加速
+
+新增独立 **FreeVideo Accelerated Sampler**，提供 Light、Standard、High、Max 四档。Light 使用 8 步蒸馏视频采样和每步 4 次音频补偿，保留独立视频／音频提示词。现有七个独立 INT8 ConvRot／VAE 文件继续使用，Light/Standard/High 另需两份独立的 260412 rank-256 高／低噪声 LoRA。
+
+```bash
+python scripts/download_acceleration.py
+```
+
+重启后导入 [08 · FreeVideo High](examples/08_freevideo_high.json)，选择参考图和模型即可。加速需要兼容的 CUDA、Triton 与 comfy-kitchen。默认预算为 18 GiB 显存／20 GiB 内存；首次自动创建约 36.30 GiB 私有流式缓存，后续复用。四档配方、安装和资源说明见 [ACCELERATION.md](ACCELERATION.md)。官方约 15 倍速度来自 H200 对照，本机速度以实测为准。
+
+**已知音频限制：** 部分种子、参考图与提示词组合会出现音频退化，用户与 FreeVideo 作者已共同观察到此类情况。原生 INT8 与加速模式均需实际试听，不能保证每组输入的声音可用。主工作流采用参考规格 **1280×720、205 帧、24 fps**；低尺寸、短时长属于实验配置。FreeVideo 发布包使用 BF16 UMT5，严格对照时应选择独立 BF16 文本编码器；INT8 文本仍受支持，但条件编码不同。
+
 ## 安装
 
-已提交 Comfy Registry（`t8star/prism-t8`），版本仍需平台审查。可先手动安装：
+Comfy Registry：[t8star/prism-t8](https://registry.comfy.org/t8star/prism-t8)，版本可用性以平台审核状态为准。也可手动安装：
 
 ```bash
 cd ComfyUI/custom_nodes
@@ -46,11 +58,15 @@ ConvRot 量化用于 block Linear；embedding、norm、时间投影、输出头�
 
 | 工作流 | 用途 |
 | --- | --- |
-| [01 · I2VA](examples/01_native_i2va.json) | 推荐起点：portable INT8 + SDPA，848×480、49 帧、50 步 |
-| [02 · Kitchen + BSA](examples/02_native_i2va_kitchen_bsa.json) | W8A8、原生 video/v2a BSA 与 IVPQ |
+| [01 · I2VA](examples/01_native_i2va.json) | portable INT8 + SDPA，1280×720、205 帧、50 步 |
+| [02 · Kitchen + BSA](examples/02_native_i2va_kitchen_bsa.json) | 视频 W8A8、原生 video/v2a BSA 与 IVPQ |
 | [03 · 白帧 T2VA](examples/03_native_t2va_white_reference.json) | 官方白色首帧条件实验模式 |
 | [04 · 720p](examples/04_native_i2va_720p.json) | 1280×720、205 帧、VAE tiling 参数预设 |
-| [05 · Kitchen 对照](examples/05_native_i2va_validation.json) | Kitchen INT8 + dense SDPA |
+| [05 · Kitchen 对照](examples/05_native_i2va_validation.json) | 848×480、49 帧接口验证；不作为音质基准 |
+| [06 · FreeVideo Light](examples/06_freevideo_light.json) | 8 步蒸馏，学生 K/V 音频补偿 |
+| [07 · FreeVideo Standard](examples/07_freevideo_standard.json) | 8 步蒸馏，部分音频教师 |
+| [08 · FreeVideo High](examples/08_freevideo_high.json) | 8 步蒸馏，完整音频教师 |
+| [09 · FreeVideo Max](examples/09_freevideo_max.json) | 20 步基础模型，联合 CFG；无需蒸馏 LoRA |
 
 每份都是包含节点位置、分组、参数与连线的**画布格式**，输出 PNG 帧、48 kHz FLAC、H.264/AAC MP4 及画布视频预览。MP4 保留全部视频帧，较短音轨补静音、较长音轨裁到视频结尾。详细导入说明见 [examples/README.md](examples/README.md)。
 
@@ -58,11 +74,11 @@ ConvRot 量化用于 block Linear；embedding、norm、时间投影、输出头�
 
 ## 运行与验证
 
-默认 `portable` 是 W8A16 旋转与临时反量化路径；`kitchen` 使用 `comfy_kitchen.int8_linear` 执行动态 W8A8。分块卸载可以降低显存占用，速度受 CPU 内存与 PCIe 影响；INT8 不减少高分辨率激活占用。
+原生采样的 `int8_backend` 控制视频主干：`portable` 使用 W8A16，`kitchen` 使用动态 W8A8。原生音频主干、桥接层和文本编码均保留浮点激活；扩散组件的独立 INT8 ConvRot 权重不变。文本加载器支持独立 BF16 UMT5，也支持较小的 INT8 版本。FreeVideo 发布包使用 BF16 UMT5；严格对照应选择该精度，INT8 文本并非同精度复现。分块卸载的速度受 CPU 内存与 PCIe 影响；INT8 不减少高分辨率激活占用。
 
 真实 alpha INT8 样片已完成 **848×480、49 帧、50 步**生成与全帧画面检查，并完整解码声画轨；音频尚未试听。RTX 5090 Laptop 24 GB、分块卸载配置耗时约 47 分钟，PyTorch 峰值分配显存约 7.76 GiB。存在轻微构图漂移与细纹理偏软，量化不保证无损。
 
-五份画布已实际导入和保存，回归测试全部通过。02/03/05 的完整 480p 样片、720p 长视频、beta 与多卡尚未完成实样验收；320×192 样片画质不佳，建议先使用 01 的默认设置。
+已通过 185 项回归测试及九份画布工作流校验；真实生成、完整解码与台词识别仅验证执行和可识别性，不能证明音质正常。历史 480p 样片不对应现在的 720p 默认配置；beta、多卡及各模式的完整质量对照尚未完成。
 
 ## 自行转换
 

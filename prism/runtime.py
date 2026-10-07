@@ -2,7 +2,9 @@
 from __future__ import annotations
 
 from contextlib import contextmanager
+import hashlib
 import json
+from pathlib import Path
 
 import torch
 from PIL import Image
@@ -10,6 +12,21 @@ from PIL import Image
 from .format import COMPONENTS, Component, load_tokenizer
 from .loading import load_component
 from .offload import FrozenOffloadModule, ManagedTransformer
+
+
+def implementation_fingerprint():
+    """Invalidate cached native outputs after changes to inference arithmetic."""
+    folder = Path(__file__).parent
+    digest = hashlib.sha256()
+    for name in ('runtime.py', 'loading.py', 'quantization.py', 'offload.py',
+                 'settings.py', 'vae.py', 'format.py',
+                 'native/models/modules/mova.py', 'native/models/modules/wan_video_dit.py',
+                 'native/models/modules/wan_audio_dit.py', 'native/models/modules/interactionv2.py',
+                 'native/models/modules/dac_vae.py', 'native/diffusion/pipelines/mova_pipeline.py',
+                 'native/diffusion/schedulers/flow_match_pair.py'):
+        digest.update(name.encode('utf-8'))
+        digest.update((folder / name).read_bytes())
+    return digest.hexdigest()
 
 
 def check_bundle(parts):
@@ -23,6 +40,16 @@ def check_bundle(parts):
     if len(ids) != 1:
         raise ValueError("Components are from different Prism variants/conversion bundles")
     return parts
+
+
+def native_linear_backend(kind, video_backend):
+    """Keep original floating activations in audio, bridge and text linears.
+
+    ConvRot weights remain INT8. The optional Kitchen activation quantizer is
+    reserved for the much larger video towers in the native pipeline; FreeVideo
+    retains its own upstream W8A8 execution in its separate worker.
+    """
+    return "portable" if kind in ("text_encoder", "audio_dit", "dual_tower_bridge") else video_backend
 
 
 @contextmanager
@@ -99,8 +126,9 @@ def run(parts, image, settings, sparse=None, device=None, callback=None, interru
         for kind, component in parts.items():
             if interrupt:
                 interrupt()
+            backend = native_linear_backend(kind, settings["int8_backend"])
             modules[kind] = load_component(component, dtype=torch.float32 if kind == "audio_vae" else torch.bfloat16,
-                                           backend=settings["int8_backend"], interrupt=interrupt)
+                                           backend=backend, interrupt=interrupt)
             if kind in ("text_encoder", "video_vae", "audio_vae"):
                 modules[kind] = FrozenOffloadModule(modules[kind])
         boundary = float(parts["dual_tower_bridge"].metadata["prism.boundary_ratio"])
