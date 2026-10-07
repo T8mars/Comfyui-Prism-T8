@@ -9,11 +9,16 @@ def register_standalone_paths():
     # loader scans cached as empty for this same response.
     import folder_paths
     from pathlib import Path
-    standalone = Path(__file__).resolve().parent / "models/standalone"
-    if standalone.is_dir():
-        for category in ("diffusion_models", "text_encoders", "vae"):
-            folder_paths.add_model_folder_path(category, str(standalone))
-    loras = Path(__file__).resolve().parent / 'models/loras'
+    model_root = Path(__file__).resolve().parent / "models"
+    standalone = model_root / "standalone"
+    for category in ("diffusion_models", "text_encoders", "vae"):
+        categorized = model_root / category
+        # Prefer the standard layout; keep older flat conversion outputs usable.
+        # Registering that flat folder too would mix all components in every menu.
+        selected = categorized if categorized.is_dir() else standalone
+        if selected.is_dir():
+            folder_paths.add_model_folder_path(category, str(selected))
+    loras = model_root / 'loras'
     if loras.is_dir():
         folder_paths.add_model_folder_path('loras', str(loras))
 

@@ -52,6 +52,8 @@ python -m pip install -r requirements.txt
 
 文本编码器为 **UMT5**，视频去噪器为双 **DiT**。配置与 tokenizer 已嵌入独立文件，使用本插件加载器，无需 Diffusers 权重目录。`diffusers` 库仅作为原生模型类的代码依赖。
 
+也可在本插件的 `models/` 下按 `diffusion_models/`、`text_encoders/`、`vae/` 和 `loras/` 分类存放，节点会自动发现。各分类目录优先于旧版混放的 `models/standalone/`；旧目录仍作为未分类时的兼容入口。
+
 ConvRot 量化用于 block Linear；embedding、norm、时间投影、输出头与 VAE 保留浮点精度。音频 VAE 以 BF16 保存、FP32 执行。七文件必须来自同一 bundle；加载器会检查组件、形状、完整性与量化标记。
 
 ## 工作流
